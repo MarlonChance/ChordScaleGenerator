@@ -836,7 +836,7 @@
         font-weight: bolder;        
     }
     hr{
-        margin: 25px;
+        margin: 15px;
     }
     table{
         border: 1px solid #9DBEBB;
