@@ -268,6 +268,7 @@
     }
 </script>
 
+<body>
 <h1>Chord/Scale Generator</h1>
 <div>
     <h2>Chord/Scale: {currentChord}</h2>
@@ -286,7 +287,7 @@
     <circle cx="271" cy="42.5" fill="grey" r="5" opacity="0.5"/>
     <circle cx="345.5" cy="42.5" fill="grey" r="5" opacity="0.5"/>
     <circle cx="549" cy="42.5" fill="grey" r="5" opacity="0.5"/>
-    <circle cx="449" cy="26" fill="grey" r="5" opacity="0.5"/>
+    <circle cx="449" cy="27.5" fill="grey" r="5" opacity="0.5"/>
     <circle cx="449" cy="57" fill="grey" r="5" opacity="0.5"/>
 	<g stroke="grey">
 		<line x1="2" x2="2" y1="1" y2="84" stroke-width="12" />
@@ -330,12 +331,12 @@
 	<text x="549" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">15</text>
 	<text x="582" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">16</text>
 <!-- open strings -->
-    <circle id="fret marker" cx="0" cy="3" r="5" name="E" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="0" cy="20" r="5" name="B" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="0" cy="35" r="5" name="G" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="0" cy="49.2" r="5" name="D" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="0" cy="64.6" r="5" name="A" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="0" cy="80" r="5" name="E" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="0" cy="3" r="6" name="E" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="0" cy="20" r="6" name="B" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="0" cy="35" r="6" name="G" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="0" cy="49.2" r="6" name="D" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="0" cy="64.6" r="6" name="A" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="0" cy="80" r="6" name="E" style="visibility: hidden; fill: ''"/>
     <text x="0" y="3.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
     <text x="0" y="20.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
     <text x="0" y="35.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
@@ -343,12 +344,12 @@
     <text x="0" y="65.1" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
     <text x="0" y="80.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
 <!-- First Fret -->
-    <circle id="fret marker" cx="27.5" cy="3" r="5" name="F" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="27.5" cy="20" r="5" name="C" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="27.5" cy="35" r="5" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="27.5" cy="49.2" r="5" name="D#/Eb" style="visibility: hidden; fill: ''"/>    
-    <circle id="fret marker" cx="27.5" cy="64.6" r="5" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="27.5" cy="80" r="5" name="F" style="visibility: hidden; fill: ''"/>    
+    <circle id="fret marker" cx="27.5" cy="3" r="6" name="F" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="27.5" cy="20" r="6" name="C" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="27.5" cy="35" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="27.5" cy="49.2" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>    
+    <circle id="fret marker" cx="27.5" cy="64.6" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="27.5" cy="80" r="6" name="F" style="visibility: hidden; fill: ''"/>    
     <text x="27.5" y="3.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>    
     <text x="27.5" y="20.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
     <text x="27.5" y="35.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
@@ -356,12 +357,12 @@
     <text x="27.5" y="65.1" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
     <text x="27.5" y="80.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
 <!-- Second Fret -->
-    <circle id="fret marker" cx="72" cy="3" r="5" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="72" cy="20" r="5" name="C#/Db" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="72" cy="35" r="5" name="A" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="72" cy="49.2" r="5" name="E" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="72" cy="64.6" r="5" name="B" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="72" cy="80" r="5" name="F#/Gb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="72" cy="3" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="72" cy="20" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="72" cy="35" r="6" name="A" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="72" cy="49.2" r="6" name="E" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="72" cy="64.6" r="6" name="B" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="72" cy="80" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
     <text x="72" y="3.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>    
     <text x="72" y="20.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
     <text x="72" y="35.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
@@ -369,12 +370,12 @@
     <text x="72" y="65.1" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
     <text x="72" y="80.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
 <!-- Third Fret -->
-    <circle id="fret marker" cx="114" cy="3" r="5" name="G" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="114" cy="20" r="5" name="D" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="114" cy="35" r="5" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="114" cy="49.2" r="5" name="F" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="114" cy="64.6" r="5" name="C" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="114" cy="80" r="5" name="G" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="114" cy="3" r="6" name="G" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="114" cy="20" r="6" name="D" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="114" cy="35" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="114" cy="49.2" r="6" name="F" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="114" cy="64.6" r="6" name="C" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="114" cy="80" r="6" name="G" style="visibility: hidden; fill: ''"/>
     <text x="114" y="3.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>    
     <text x="114" y="20.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
     <text x="114" y="35.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
@@ -382,12 +383,12 @@
     <text x="114" y="65.1" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
     <text x="114" y="80.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
 <!-- Fourth Fret -->
-    <circle id="fret marker" cx="155" cy="3" r="5" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="155" cy="20" r="5" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="155" cy="35" r="5" name="B" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="155" cy="49.2" r="5" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="155" cy="64.6" r="5" name="C#/Db" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="155" cy="80" r="5" name="G#/Ab" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="155" cy="3" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="155" cy="20" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="155" cy="35" r="6" name="B" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="155" cy="49.2" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="155" cy="64.6" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="155" cy="80" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
     <text x="155" y="3.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>    
     <text x="155" y="20.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
     <text x="155" y="35.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
@@ -395,12 +396,12 @@
     <text x="155" y="65.1" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
     <text x="155" y="80.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
 <!-- Fifth Fret -->
-    <circle id="fret marker" cx="195" cy="3" r="5" name="A" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="195" cy="20" r="5" name="E" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="195" cy="35" r="5" name="C" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="195" cy="49.2" r="5" name="G" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="195" cy="64.6" r="5" name="D" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="195" cy="80" r="5" name="A" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="195" cy="3" r="6" name="A" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="195" cy="20" r="6" name="E" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="195" cy="35" r="6" name="C" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="195" cy="49.2" r="6" name="G" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="195" cy="64.6" r="6" name="D" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="195" cy="80" r="6" name="A" style="visibility: hidden; fill: ''"/>
     <text x="195" y="3.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>    
     <text x="195" y="20.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
     <text x="195" y="35.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
@@ -408,12 +409,12 @@
     <text x="195" y="65.1" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
     <text x="195" y="80.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
 <!-- Sixth Fret -->
-    <circle id="fret marker" cx="234" cy="3" r="5" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="234" cy="20" r="5" name="F" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="234" cy="35" r="5" name="C#/Db" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="234" cy="49.2" r="5" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="234" cy="64.6" r="5" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="234" cy="80" r="5" name="A#/Bb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="234" cy="3" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="234" cy="20" r="6" name="F" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="234" cy="35" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="234" cy="49.2" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="234" cy="64.6" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="234" cy="80" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
     <text x="234" y="3.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>    
     <text x="234" y="20.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
     <text x="234" y="35.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
@@ -421,12 +422,12 @@
     <text x="234" y="65.1" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
     <text x="234" y="80.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
 <!-- Seventh Fret -->
-    <circle id="fret marker" cx="271" cy="3" r="5" name="B" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="271" cy="20" r="5" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="271" cy="35" r="5" name="D" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="271" cy="49.2" r="5" name="A" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="271" cy="64.6" r="5" name="E" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="271" cy="80" r="5" name="B" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="271" cy="3" r="6" name="B" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="271" cy="20" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="271" cy="35" r="6" name="D" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="271" cy="49.2" r="6" name="A" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="271" cy="64.6" r="6" name="E" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="271" cy="80" r="6" name="B" style="visibility: hidden; fill: ''"/>
     <text x="271" y="3.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>    
     <text x="271" y="20.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
     <text x="271" y="35.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
@@ -434,12 +435,12 @@
     <text x="271" y="65.1" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
     <text x="271" y="80.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
 <!-- Eighth Fret -->
-    <circle id="fret marker" cx="309" cy="3" r="5" name="C" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="309" cy="20" r="5" name="G" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="309" cy="35" r="5" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="309" cy="49.2" r="5" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="309" cy="64.6" r="5" name="F" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="309" cy="80" r="5" name="C" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="309" cy="3" r="6" name="C" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="309" cy="20" r="6" name="G" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="309" cy="35" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="309" cy="49.2" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="309" cy="64.6" r="6" name="F" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="309" cy="80" r="6" name="C" style="visibility: hidden; fill: ''"/>
     <text x="309" y="3.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>    
     <text x="309" y="20.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
     <text x="309" y="35.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
@@ -447,12 +448,12 @@
     <text x="309" y="65.1" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
     <text x="309" y="80.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
 <!-- Nineth Fret -->
-    <circle id="fret marker" cx="345.5" cy="3" r="5" name="C#/Db" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="345.5" cy="20" r="5" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="345.5" cy="35" r="5" name="E" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="345.5" cy="49.2" r="5" name="B" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="345.5" cy="64.6" r="5" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="345.5" cy="80" r="5" name="C#/Db" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="345.5" cy="3" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="345.5" cy="20" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="345.5" cy="35" r="6" name="E" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="345.5" cy="49.2" r="6" name="B" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="345.5" cy="64.6" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="345.5" cy="80" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
     <text x="345.5" y="3.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>    
     <text x="345.5" y="20.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
     <text x="345.5" y="35.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
@@ -460,12 +461,12 @@
     <text x="345.5" y="65.1" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
     <text x="345.5" y="80.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
 <!-- Tenth Fret -->
-    <circle id="fret marker" cx="380" cy="3" r="5" name="D" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="380" cy="20" r="5" name="A" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="380" cy="35" r="5" name="F" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="380" cy="49.2" r="5" name="C" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="380" cy="64.6" r="5" name="G" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="380" cy="80" r="5" name="D" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="380" cy="3" r="6" name="D" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="380" cy="20" r="6" name="A" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="380" cy="35" r="6" name="F" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="380" cy="49.2" r="6" name="C" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="380" cy="64.6" r="6" name="G" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="380" cy="80" r="6" name="D" style="visibility: hidden; fill: ''"/>
     <text x="380" y="3.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>    
     <text x="380" y="20.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
     <text x="380" y="35.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
@@ -473,12 +474,12 @@
     <text x="380" y="65.1" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
     <text x="380" y="80.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
 <!-- Eleventh Fret -->
-    <circle id="fret marker" cx="415" cy="3" r="5" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="415" cy="20" r="5" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="415" cy="35" r="5" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="415" cy="49.2" r="5" name="C#/Db" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="415" cy="64.6" r="5" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="415" cy="80" r="5" name="D#/Eb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="415" cy="3" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="415" cy="20" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="415" cy="35" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="415" cy="49.2" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="415" cy="64.6" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="415" cy="80" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
     <text x="415" y="3.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>    
     <text x="415" y="20.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
     <text x="415" y="35.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
@@ -486,12 +487,12 @@
     <text x="415" y="65.1" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
     <text x="415" y="80.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
 <!-- Twelfth Fret -->
-    <circle id="fret marker" cx="449" cy="3" r="5" name="E" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="449" cy="20" r="5" name="B" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="449" cy="35" r="5" name="G" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="449" cy="49.2" r="5" name="D" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="449" cy="64.6" r="5" name="A" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="449" cy="80" r="5" name="E" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="449" cy="3" r="6" name="E" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="449" cy="20" r="6" name="B" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="449" cy="35" r="6" name="G" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="449" cy="49.2" r="6" name="D" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="449" cy="64.6" r="6" name="A" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="449" cy="80" r="6" name="E" style="visibility: hidden; fill: ''"/>
     <text x="449" y="3.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>    
     <text x="449" y="20.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
     <text x="449" y="35.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
@@ -499,12 +500,12 @@
     <text x="449" y="65.1" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
     <text x="449" y="80.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
 <!-- Thirteenth Fret -->
-    <circle id="fret marker" cx="483" cy="3" r="5" name="F" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="483" cy="20" r="5" name="C" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="483" cy="35" r="5" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="483" cy="49.2" r="5" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="483" cy="64.6" r="5" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="483" cy="80" r="5" name="F" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="483" cy="3" r="6" name="F" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="483" cy="20" r="6" name="C" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="483" cy="35" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="483" cy="49.2" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="483" cy="64.6" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="483" cy="80" r="6" name="F" style="visibility: hidden; fill: ''"/>
     <text x="483" y="3.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>    
     <text x="483" y="20.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
     <text x="483" y="35.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
@@ -512,12 +513,12 @@
     <text x="483" y="65.1" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
     <text x="483" y="80.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
 <!-- Fourteenth Fret -->
-    <circle id="fret marker" cx="517" cy="3" r="5" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="517" cy="20" r="5" name="C#/Db" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="517" cy="35" r="5" name="A" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="517" cy="49.2" r="5" name="E" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="517" cy="64.6" r="5" name="B" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="517" cy="80" r="5" name="F#/Gb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="517" cy="3" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="517" cy="20" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="517" cy="35" r="6" name="A" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="517" cy="49.2" r="6" name="E" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="517" cy="64.6" r="6" name="B" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="517" cy="80" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
     <text x="517" y="3.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>    
     <text x="517" y="20.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
     <text x="517" y="35.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
@@ -525,12 +526,12 @@
     <text x="517" y="65.1" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
     <text x="517" y="80.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
 <!-- Fifteenth Fret -->
-    <circle id="fret marker" cx="549" cy="3" r="5" name="G" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="549" cy="20" r="5" name="D" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="549" cy="35" r="5" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="549" cy="49.2" r="5" name="F" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="549" cy="64.6" r="5" name="C" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="549" cy="80" r="5" name="G" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="549" cy="3" r="6" name="G" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="549" cy="20" r="6" name="D" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="549" cy="35" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="549" cy="49.2" r="6" name="F" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="549" cy="64.6" r="6" name="C" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="549" cy="80" r="6" name="G" style="visibility: hidden; fill: ''"/>
     <text x="549" y="3.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>    
     <text x="549" y="20.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
     <text x="549" y="35.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
@@ -538,12 +539,12 @@
     <text x="549" y="65.1" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
     <text x="549" y="80.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
 <!-- Sixteenth Fret -->
-    <circle id="fret marker" cx="582" cy="3" r="5" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="582" cy="20" r="5" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="582" cy="35" r="5" name="B" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="582" cy="49.2" r="5" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="582" cy="64.6" r="5" name="C#/Db" style="visibility: hidden; fill: ''"/>
-    <circle id="fret marker" cx="582" cy="80" r="5" name="G#/Ab" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="582" cy="3" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="582" cy="20" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="582" cy="35" r="6" name="B" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="582" cy="49.2" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="582" cy="64.6" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
+    <circle id="fret marker" cx="582" cy="80" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
     <text x="582" y="3.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white' >{noteValues["G#/Ab"]}</text>    
     <text x="582" y="20.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
     <text x="582" y="35.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
@@ -552,7 +553,7 @@
     <text x="582" y="80.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
 </svg>
 <hr />
-<form id="ChordForm" on:submit|preventDefault={formSubmit}>
+<form class="form" id="ChordForm" on:submit|preventDefault={formSubmit}>
     <label for="ChordNote">Choose a Chord Note:</label>
     <select id="ChordNote" name="ChordNote" bind:value={chord.chordNote}>
         <option value="">Choose a Note</option>
@@ -821,28 +822,30 @@
         </tr>
     </table>
 </div>
+</body>
 
 <style>
-    * {
+    *, body{
         font-family: "Kanit", sans-serif;
         font-weight: bolder;
+        background-color: #FDFFFC;
+        color: #031926;   
     }
     h1 {
         font-size: 75px;
-        font-weight: bolder;
+        font-weight: bolder;        
     }
     hr{
         margin: 25px;
     }
     table{
-        border: 1px solid gainsboro;
+        border: 1px solid #9DBEBB;
         margin-left: 10%;
         margin-top: 10px;
         margin-bottom: 10px;
     }
     th, td{
-        border: 1px solid black;
-        background-color:whitesmoke ;
+        border: 1px solid #031926;
     }
     .extensions {
         white-space: nowrap;
@@ -857,6 +860,11 @@
     }
     #ChordNote, #ChordType, #ChordQuality{
         margin: 5px;
+    }
+    button{        
+        background-color: #468189;
+        border: 0px;
+        color: #FDFFFC;
     }
 
 </style>
