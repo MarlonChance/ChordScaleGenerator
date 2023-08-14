@@ -87,7 +87,7 @@
         'Minor Blues (scale)': ["1", "b3", "4", "b5", "5", "b7"]
     }
 
-    const chord = {
+    const chord: any = {
         chordNote: '',
         chordType: '',
         chordQuality: '',
@@ -98,6 +98,7 @@
 
     let notesInChord: string[] = []
     let currentChord: string = ''
+    let notesInChordString: string = ''
     
     function getChord(){
         let root: string = chord.chordNote.trim() + chord.chordType.trim()
@@ -259,13 +260,18 @@
     function formSubmit(){
         clearNotes(notes)
         getChord()
+        notesInChordString = ''
+        for (let i = 0; i < notesInChord.length; i ++){
+            notesInChordString += notesInChord[i] + ",   "
+        }
+
     }
 </script>
 
 <h1>Chord/Scale Generator</h1>
 <div>
     <h2>Chord/Scale: {currentChord}</h2>
-    <h2>Notes:{" " + notesInChord}</h2>
+    <h2>Notes:{" " + notesInChordString}</h2>
 </div>
 <hr /> 
 <svg viewBox="-15 -20 650 120">
