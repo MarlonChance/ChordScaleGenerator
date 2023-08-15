@@ -23,6 +23,8 @@
                                     "black", "black"]
     
     const intervals: any = {
+        '': [0],
+        power: [0, 7],
         maj: [0, 4, 7],
         min: [0, 3, 7],
         sus2: [0, 2, 7],
@@ -57,6 +59,8 @@
     }
 
     const displayIntervals: any = {
+        "": ["1"],
+        power: ["1", "5"],
         maj: ["1", "3", "5"],
         min: ["1", "b3", "5"],
         sus2: ["1", "2", "5"],
@@ -99,6 +103,7 @@
     let notesInChord: string[] = []
     let currentChord: string = ''
     let notesInChordString: string = ''
+    let guitarType: string = 'strat'
     
     function getChord(){
         let root: string = chord.chordNote.trim() + chord.chordType.trim()
@@ -243,6 +248,30 @@
         }
     }    
 
+    function setGuitarType(){
+        if(guitarType == 'strat'){
+            let stratMarkers = document.getElementsByName('strat')
+            let lpMarkers = document.getElementsByName('les paul')
+            for ( let i = 0; i < stratMarkers.length; i++){
+                stratMarkers[i].style.visibility = ''
+            }
+            for ( let i = 0; i < lpMarkers.length; i++){
+                lpMarkers[i].style.visibility = 'hidden'
+            }
+        }
+
+        if(guitarType == 'les paul'){
+            let stratMarkers = document.getElementsByName('strat')
+            let lpMarkers = document.getElementsByName('les paul')
+            for ( let i = 0; i < stratMarkers.length; i++){
+                stratMarkers[i].style.visibility = 'hidden'
+            }
+            for ( let i = 0; i < lpMarkers.length; i++){
+                lpMarkers[i].style.visibility = ''
+            }
+        }
+    }
+
     function clearForm(){
         location.reload()     
     }
@@ -258,6 +287,7 @@
     }
 
     function formSubmit(){
+        setGuitarType()
         clearNotes(notes)
         getChord()
         notesInChordString = ''
@@ -281,13 +311,21 @@
     <text x="26" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Root:</text>
 	<text x="82" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Other Notes:</text>
 	<text x="150" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Extensions:</text>
-    <circle cx="114" cy="42.5" fill="grey" r="5" opacity="0.5"/>
-    <circle cx="195" cy="42.5" fill="grey" r="5" opacity="0.5"/>
-    <circle cx="271" cy="42.5" fill="grey" r="5" opacity="0.5"/>
-    <circle cx="345.5" cy="42.5" fill="grey" r="5" opacity="0.5"/>
-    <circle cx="549" cy="42.5" fill="grey" r="5" opacity="0.5"/>
-    <circle cx="449" cy="27.5" fill="grey" r="5" opacity="0.5"/>
-    <circle cx="449" cy="57" fill="grey" r="5" opacity="0.5"/>
+    
+    <polygon name="les paul" points="105,71 105,12 125,22 125,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="les paul" points="184,71 184,12 204,22 204,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="les paul" points="262,71 262,12 280,22 280,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="les paul" points="336.5,71 336.5,12 352.5,22 352.5,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="les paul" points="440,71 440,12 455,22 455,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="les paul" points="540,71 540,12 555,22 555,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+
+    <circle name="strat" cx="114" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+    <circle name="strat" cx="195" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+    <circle name="strat" cx="271" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+    <circle name="strat" cx="345.5" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+    <circle name="strat" cx="549" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+    <circle name="strat" cx="449" cy="27.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+    <circle name="strat" cx="449" cy="57" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
 	<g stroke="grey">
 		<line x1="2" x2="2" y1="1" y2="84" stroke-width="12" />
 		<line x1="50" x2="50" y1="1" y2="84" stroke-width="4" />
@@ -900,6 +938,7 @@
     <label for="ChordQuality">Choose a Chord/Scale Quality:</label>
     <select id="ChordQuality" name="ChordQuality" bind:value={chord.chordQuality}>
         <option value="">Choose a Quality</option>
+        <option value="power ">Power Chord</option>
         <option value="maj ">Major</option>
         <option value="min ">Minor</option>
         <option value="sus2 ">Sus2</option>
@@ -982,10 +1021,13 @@
         <button type="submit">Create Chord/Scale</button>
         <button on:click={clearForm}>Clear Form</button>
     </div>
-    
-    
 
-    
+    <div>
+        <input type="radio" name="guitar type" value="strat" checked bind:group={guitarType}/>
+        <label for="strat">Stratocaster</label>
+        <input type="radio" name="guitar type" value="les paul" bind:group={guitarType}/>
+        <label for="les paul">Les Paul</label>        
+    </div>    
 </form>
 <hr />
 <div>
