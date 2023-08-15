@@ -217,6 +217,10 @@
     
     
     function showNotes(currentNotes: string[], chordQuality: string, extensions: string[] = []){
+        for (let i = 0; i < notes.length; i++){
+            
+            noteValues[notes[i]] = ''
+        }
         chordQuality = chordQuality.trim()   
         let extensionsColor = "purple"
         for (let i = 0; i < currentNotes.length; i++){
@@ -226,7 +230,7 @@
             }
             else{
                 for (let k = 0; k < extensions.length; k++){
-                    if(extensions[k] != ''){
+                    if(extensions[k] != '' && noteValues[currentNotes[i]] == ''){
                         noteValues[currentNotes[i]] = extensions[k]
                         extensions[k] = ''
                         break
@@ -239,7 +243,7 @@
                     if(i < displayIntervals[chordQuality].length){
                         dotNodes[j].style.fill = colorArray[i]
                     }
-                    else{
+                    else if(dotNodes[j].style.fill == ''){
                         dotNodes[j].style.fill = extensionsColor
                     }
                                        
@@ -249,25 +253,42 @@
     }    
 
     function setGuitarType(){
+        let stratMarkers = document.getElementsByName('strat')
+        let lpMarkers = document.getElementsByName('les paul')
+        let rickMarkers = document.getElementsByName('rickenbacker')
         if(guitarType == 'strat'){
-            let stratMarkers = document.getElementsByName('strat')
-            let lpMarkers = document.getElementsByName('les paul')
             for ( let i = 0; i < stratMarkers.length; i++){
                 stratMarkers[i].style.visibility = ''
             }
             for ( let i = 0; i < lpMarkers.length; i++){
                 lpMarkers[i].style.visibility = 'hidden'
             }
+            for ( let i = 0; i < rickMarkers.length; i++){
+                rickMarkers[i].style.visibility = 'hidden'
+            }
         }
 
         if(guitarType == 'les paul'){
-            let stratMarkers = document.getElementsByName('strat')
-            let lpMarkers = document.getElementsByName('les paul')
             for ( let i = 0; i < stratMarkers.length; i++){
                 stratMarkers[i].style.visibility = 'hidden'
             }
             for ( let i = 0; i < lpMarkers.length; i++){
                 lpMarkers[i].style.visibility = ''
+            }
+            for ( let i = 0; i < rickMarkers.length; i++){
+                rickMarkers[i].style.visibility = 'hidden'
+            }
+        }
+
+        if(guitarType == 'rickenbacker'){
+            for ( let i = 0; i < stratMarkers.length; i++){
+                stratMarkers[i].style.visibility = 'hidden'
+            }
+            for ( let i = 0; i < lpMarkers.length; i++){
+                lpMarkers[i].style.visibility = 'hidden'
+            }
+            for ( let i = 0; i < rickMarkers.length; i++){
+                rickMarkers[i].style.visibility = ''
             }
         }
     }
@@ -318,6 +339,13 @@
     <polygon name="les paul" points="336.5,71 336.5,12 352.5,22 352.5,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
     <polygon name="les paul" points="440,71 440,12 455,22 455,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
     <polygon name="les paul" points="540,71 540,12 555,22 555,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+
+    <polygon name="rickenbacker" points="98,81 98,3 130,3" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="rickenbacker" points="177,81 177,3 209,3" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="rickenbacker" points="255.5,81 255.5,3 285,3" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="rickenbacker" points="331.5,81 331.5,3 357.5,3" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="rickenbacker" points="435,81 435,3 460,3" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="rickenbacker" points="536,81 536,3 560,3" fill="grey" opacity="0.5" style="visibility: hidden"/>
 
     <circle name="strat" cx="114" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
     <circle name="strat" cx="195" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
@@ -1026,7 +1054,9 @@
         <input type="radio" name="guitar type" value="strat" checked bind:group={guitarType}/>
         <label for="strat">Stratocaster</label>
         <input type="radio" name="guitar type" value="les paul" bind:group={guitarType}/>
-        <label for="les paul">Les Paul</label>        
+        <label for="les paul">Les Paul</label>      
+        <input type="radio" name="guitar type" value="rickenbacker" bind:group={guitarType}/>
+        <label for="rickenbacker">Rickenbacker</label>        
     </div>    
 </form>
 <hr />
