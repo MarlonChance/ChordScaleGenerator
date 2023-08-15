@@ -340,12 +340,12 @@
     <polygon name="les paul" points="440,71 440,12 455,22 455,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
     <polygon name="les paul" points="540,71 540,12 555,22 555,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
 
-    <polygon name="rickenbacker" points="98,81 98,3 130,3" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="rickenbacker" points="177,81 177,3 209,3" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="rickenbacker" points="255.5,81 255.5,3 285,3" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="rickenbacker" points="331.5,81 331.5,3 357.5,3" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="rickenbacker" points="435,81 435,3 460,3" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="rickenbacker" points="536,81 536,3 560,3" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="rickenbacker" points="98,81 130,3 130,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="rickenbacker" points="177,81 209,3 209,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="rickenbacker" points="255.5,81 285,3 285,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="rickenbacker" points="331.5,81 357.5,3 357.5,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="rickenbacker" points="435,81 460,3 460,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <polygon name="rickenbacker" points="536,81 560,3 560,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
 
     <circle name="strat" cx="114" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
     <circle name="strat" cx="195" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
