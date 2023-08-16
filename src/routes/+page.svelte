@@ -150,13 +150,13 @@
             chord.thirteen = ''
         }
 
-        if((chord.chordQuality.includes('min') || chord.chordQuality.includes('dim')) && chord.nine.trim() == '(#9)'){
+        if(((chord.chordQuality.includes('min') || chord.chordQuality.includes('dim')) && chord.nine.trim() == '(#9)') || (chord.chordQuality.includes('sus2') && chord.nine.trim() == '(9)')){
             chord.nine = ''
         }
         else{
             currentChord += chord.nine
         }
-        if((chord.chordQuality.includes('dim') || chord.chordQuality.includes('b5')) && chord.eleven.trim() == '(#11)'){
+        if(((chord.chordQuality.includes('dim') || chord.chordQuality.includes('b5')) && chord.eleven.trim() == '(#11)') || (chord.chordQuality.includes('sus4') && chord.eleven.trim() == '(11)')){
             chord.eleven = ''
         }
         else{
