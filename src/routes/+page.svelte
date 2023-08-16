@@ -113,9 +113,7 @@
         }
         if(chord.chordQuality.trim() == 'sus4' && chord.eleven == '(11)'){
             chord.eleven = ''
-        }
-        let extensions: string[] = [chord.nine.trim(), chord.eleven.trim(), chord.thirteen.trim()]
-        
+        }               
         for (const index in notes) {
             if (notes[index]== root){
                 rootIndex = parseInt(index)
@@ -124,13 +122,12 @@
         }
         if(rootIndex == -1){
             for (const index in notes) {
-            if (notes[index].includes(root)){
-                rootIndex = parseInt(index)
-                break
+                if (notes[index].includes(root)){
+                    rootIndex = parseInt(index)
+                    break
+                }
             }
-        }
-        }
-        
+        }        
         if (rootIndex == -1){
             alert("Invalid Root")
             chord.chordNote = chord.chordQuality = 
@@ -146,11 +143,34 @@
         
         currentChord = chord.chordNote + 
                         chord.chordType + 
-                        chord.chordQuality + 
-                        chord.nine +
-                        chord.eleven + 
-                        chord.thirteen
+                        chord.chordQuality
+        if(chord.chordQuality.includes('scale')){
+            chord.nine = ''
+            chord.eleven = ''
+            chord.thirteen = ''
+        }
 
+        if((chord.chordQuality.includes('min') || chord.chordQuality.includes('dim')) && chord.nine.trim() == '(#9)'){
+            chord.nine = ''
+        }
+        else{
+            currentChord += chord.nine
+        }
+        if((chord.chordQuality.includes('dim') || chord.chordQuality.includes('b5')) && chord.eleven.trim() == '(#11)'){
+            chord.eleven = ''
+        }
+        else{
+            currentChord += chord.eleven
+        }
+        if((chord.chordQuality.includes('aug') && chord.thirteen.trim() == '(b13)') || 
+                ((chord.chordQuality.includes('min7') || chord.chordQuality.includes('dom') || chord.chordQuality.includes('aug7')) && chord.thirteen.trim() == '(#13)') || 
+                ((chord.chordQuality.includes('dim7') || chord.chordQuality.includes('6')) && chord.thirteen.trim() == '(13)')){
+                    chord.thirteen = ''
+        }
+        else{
+            currentChord += chord.thirteen
+        }                             
+        let extensions: string[] = [chord.nine.trim(), chord.eleven.trim(), chord.thirteen.trim()]        
         notesInChord = getNotes(rootIndex, chord.chordQuality, extensions)  
         showNotes(notesInChord, chord.chordQuality, extensions)      
     }
@@ -162,41 +182,43 @@
         notesInChord = []
         if(extensions.length > 0){
             for (let i = 0; i < extensions.length; i++){
-            switch(extensions[i]) {
-                case "(9)":    
-                    if(chordQuality != 'sus2'){
-                        chordIntervals = [...chordIntervals, intervals["9"][0]] 
-                    }                            
-                    break;
-                case "(#9)":            
-                    chordIntervals = [...chordIntervals, intervals["9"][0] + 1] 
-                    break;
-                case "(b9)":            
-                    chordIntervals = [...chordIntervals, intervals["9"][0] - 1] 
-                    break;
-                case "(11)":    
-                    if(chordQuality != 'sus4'){        
-                        chordIntervals = [...chordIntervals, intervals["11"][0]]
-                    }
-                    break;
-                case "(#11)":            
-                    chordIntervals = [...chordIntervals, intervals["11"][0] + 1]
-                    break;
-                case "(b11)":            
-                    chordIntervals = [...chordIntervals, intervals["11"][0] - 1]
-                    break;
-                case "(13)":            
-                    chordIntervals = [...chordIntervals, intervals["13"][0]]
-                    break;
-                case "(#13)":            
-                    chordIntervals = [...chordIntervals, intervals["13"][0] + 1]
-                    break;
-                case "(b13)":            
-                    chordIntervals = [...chordIntervals, intervals["13"][0] - 1]
-                    break;           
-                default:            
-                    break;         
-                } 
+                if(!chord.chordQuality.includes('scale')){
+                    switch(extensions[i]) {
+                    case "(9)":    
+                        if(chordQuality != 'sus2'){
+                            chordIntervals = [...chordIntervals, intervals["9"][0]] 
+                        }                            
+                        break;
+                    case "(#9)":            
+                        chordIntervals = [...chordIntervals, intervals["9"][0] + 1] 
+                        break;
+                    case "(b9)":            
+                        chordIntervals = [...chordIntervals, intervals["9"][0] - 1] 
+                        break;
+                    case "(11)":    
+                        if(chordQuality != 'sus4'){        
+                            chordIntervals = [...chordIntervals, intervals["11"][0]]
+                        }
+                        break;
+                    case "(#11)":            
+                        chordIntervals = [...chordIntervals, intervals["11"][0] + 1]
+                        break;
+                    case "(b11)":            
+                        chordIntervals = [...chordIntervals, intervals["11"][0] - 1]
+                        break;
+                    case "(13)":            
+                        chordIntervals = [...chordIntervals, intervals["13"][0]]
+                        break;
+                    case "(#13)":            
+                        chordIntervals = [...chordIntervals, intervals["13"][0] + 1]
+                        break;
+                    case "(b13)":            
+                        chordIntervals = [...chordIntervals, intervals["13"][0] - 1]
+                        break;           
+                    default:            
+                        break;         
+                    } 
+                }            
             }
         }        
         
