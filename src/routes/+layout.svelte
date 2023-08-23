@@ -7,8 +7,8 @@
 </script>
 
 <nav id="myNAV">
-    <a class={path === '/' ? 'active' : ''} href="/">Six/Four String</a>
-    <a class={path === '/Seven-Five' ? 'active' : ''} href="/Seven-Five">Seven/Five String</a>
+    <a class={path === '/' ? 'active' : ''} href="/">Guitar/Bass Six/Four String</a>
+    <a class={path === '/Seven-Five' ? 'active' : ''} href="/Seven-Five">Guitar/Bass Seven/Five String</a>
     <a class={path === '/Mandolin' ? 'active' : ''} href="/Mandolin">Mandolin</a>
     <a class={path === '/Ukulele' ? 'active' : ''} href="/Ukulele">Ukulele</a>
     <a class={path === '/Banjo' ? 'active' : ''} href="/Banjo">Banjo</a>
@@ -25,7 +25,7 @@
   nav {
     background-color: #FDFFFC;
     overflow: hidden;
-    max-width: 50%;
+    max-width: 75%;
   }
 
   /* Style the links inside the navigation bar */

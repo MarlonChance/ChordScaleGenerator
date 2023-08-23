@@ -732,7 +732,7 @@
         <option value="G">G</option>
         <option value="G#/Ab">G#/Ab</option>
     </select>
-    <label for="3rd String">3: &nbsp;</label>
+    <label for="3rd String">3:</label>
     <select id="3rd String" name="3rd String" bind:value={tuningNotes["3rd String"]}>
         <option value="A">A</option>
         <option value="A#/Bb">A#/Bb</option>
