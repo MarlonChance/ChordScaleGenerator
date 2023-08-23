@@ -25,7 +25,7 @@
   nav {
     background-color: #FDFFFC;
     overflow: hidden;
-    max-width: 75%;
+    max-width: 100%;
   }
 
   /* Style the links inside the navigation bar */
@@ -36,6 +36,7 @@
     padding: 4px 6px;
     text-decoration: none;
     font-size: 17px;
+    width: 15%;
   }
 
   /* Change the color of links on hover */
