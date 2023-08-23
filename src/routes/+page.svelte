@@ -1,9 +1,25 @@
 <script lang="ts">
     import Piano from "../components/Piano.svelte"
+
+    let notesInChord: string[] = []
+    let currentChord: string = ''
+    let notesInChordString: string = ''
+    let guitarType: string = 'dots'
+    let instrument: string = 'guitar'
+
     const notes: string[] = ["A", "A#/Bb", "B", 
                                 "C", "C#/Db", "D", 
                                 "D#/Eb", "E", "F", 
                                 "F#/Gb", "G", "G#/Ab"]
+    
+    const tuningNotes: any = {
+        "1st String": "E", 
+        "2nd String": "B", 
+        "3rd String": "G", 
+        "4th String": "D", 
+        "5th String": "A", 
+        "6th String": "E"
+    }
 
     let noteValues: any = {
         "A": "",
@@ -101,12 +117,6 @@
         thirteen: ''
     }
 
-    let notesInChord: string[] = []
-    let currentChord: string = ''
-    let notesInChordString: string = ''
-    let guitarType: string = 'dots'
-    let instrument: string = 'guitar'
-    
     function getChord(){
         let root: string = chord.chordNote.trim() + chord.chordType.trim()
         let rootIndex: number = -1
@@ -263,20 +273,72 @@
             }            
             for (let j = 0; j < dotNodes.length; j++){
                 dotNodes[j].style.visibility = ""
-                if (dotNodes[j].id == "position marker"){
+                dotNodes[j].textContent = noteValues[currentNotes[i]]
+                if (dotNodes[j].classList.contains("marker")){
                     if(i < displayIntervals[chordQuality].length){
                         dotNodes[j].style.fill = colorArray[i]
                     }
                     else if(dotNodes[j].style.fill == ''){
                         dotNodes[j].style.fill = extensionsColor
-                    }
-                                       
+                    }                                       
                 }
             }           
         }
-        noteValues = noteValues;
-        console.log("YOOOO", noteValues)
-    }    
+    } 
+    
+    function setTuning(){
+        let stringsArray: string[] = [];
+        if(instrument == 'guitar'){
+            stringsArray = ["one", "two", "three", "four", "five", "six"]
+        }
+        if(instrument == 'bass'){
+            stringsArray = ["bassone", "basstwo", "bassthree", "bassfour"]
+        } 
+        let stringNoteIndex: number = 0;
+        for(let i = 0; i < stringsArray.length; i++){
+            let stringNodes = document.querySelectorAll(`[id^=${stringsArray[i]}]`)
+            switch(stringsArray[i]){
+                case("one"):
+                    stringNoteIndex = notes.indexOf(tuningNotes["1st String"])
+                    break;
+                case("two"):
+                    stringNoteIndex = notes.indexOf(tuningNotes["2nd String"])
+                    break;
+                case("three"):
+                    stringNoteIndex = notes.indexOf(tuningNotes["3rd String"])
+                    break;
+                case("four"):
+                    stringNoteIndex = notes.indexOf(tuningNotes["4th String"])
+                    break;
+                case("five"):
+                    stringNoteIndex = notes.indexOf(tuningNotes["5th String"])
+                    break;
+                case("six"):
+                    stringNoteIndex = notes.indexOf(tuningNotes["6th String"])
+                    break;
+                case("bassone"):
+                    stringNoteIndex = notes.indexOf(tuningNotes["3rd String"])
+                    break;
+                case("basstwo"):
+                    stringNoteIndex = notes.indexOf(tuningNotes["4th String"])
+                    break;
+                case("bassthree"):
+                    stringNoteIndex = notes.indexOf(tuningNotes["5th String"])
+                    break;
+                case("bassfour"):
+                    stringNoteIndex = notes.indexOf(tuningNotes["6th String"])
+                    break;
+            }
+            for(let j = 0; j < stringNodes.length; j += 2){
+                stringNodes[j].setAttribute("name", notes[stringNoteIndex])
+                stringNodes[j+1].setAttribute("name", notes[stringNoteIndex])
+                stringNoteIndex++
+                if(stringNoteIndex == 12){
+                    stringNoteIndex = 0
+                }
+            } 
+        }
+    }
 
     function setGuitarType(){
         let dotsMarkers = document.getElementsByName('dots')
@@ -381,6 +443,7 @@
     }
 
     function formSubmit(){
+        setTuning()
         setInstrumentType()
         setGuitarType()
         clearNotes(notes)
@@ -393,12 +456,12 @@
 </script>
 
 <body>
-<h1>Chord/Scale Generator</h1>
-<div>
+<div>   
     <h2>Chord/Scale: {currentChord}</h2>
     <h2>Notes:{" " + notesInChordString}</h2>
 </div>
 <hr /> 
+
 <svg viewBox="-15 -20 650 120">
     <circle cx="45" cy="-15" r="5" fill="red"/>
     <circle cx="115" cy="-15" r="5" fill="black"/>
@@ -406,36 +469,44 @@
     <text x="26" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Root:</text>
 	<text x="82" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Other Notes:</text>
 	<text x="150" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Extensions:</text>
-    
-    <polygon name="trapezoid" points="105,71 105,12 125,22 125,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="trapezoid" points="184,71 184,12 204,22 204,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="trapezoid" points="262,71 262,12 280,22 280,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="trapezoid" points="336.5,71 336.5,12 352.5,22 352.5,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="trapezoid" points="440,71 440,12 455,22 455,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="trapezoid" points="540,71 540,12 555,22 555,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <g class="trapezoid">
+        <polygon name="trapezoid" points="105,71 105,12 125,22 125,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+        <polygon name="trapezoid" points="184,71 184,12 204,22 204,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+        <polygon name="trapezoid" points="262,71 262,12 280,22 280,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+        <polygon name="trapezoid" points="336.5,71 336.5,12 352.5,22 352.5,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+        <polygon name="trapezoid" points="440,71 440,12 455,22 455,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+        <polygon name="trapezoid" points="540,71 540,12 555,22 555,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    </g>
 
-    <polygon name="sharkFin" points="98,81 130,3 130,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="sharkFin" points="177,81 209,3 209,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="sharkFin" points="255.5,81 285,3 285,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="sharkFin" points="331.5,81 357.5,3 357.5,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="sharkFin" points="435,81 460,3 460,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
-    <polygon name="sharkFin" points="536,81 560,3 560,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    <g class="sharkFin">
+        <polygon name="sharkFin" points="98,81 130,3 130,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
+        <polygon name="sharkFin" points="177,81 209,3 209,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
+        <polygon name="sharkFin" points="255.5,81 285,3 285,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
+        <polygon name="sharkFin" points="331.5,81 357.5,3 357.5,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
+        <polygon name="sharkFin" points="435,81 460,3 460,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
+        <polygon name="sharkFin" points="536,81 560,3 560,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
+    </g>
 
-    <circle name="dots" cx="114" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
-    <circle name="dots" cx="195" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
-    <circle name="dots" cx="271" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
-    <circle name="dots" cx="345.5" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
-    <circle name="dots" cx="549" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
-    <circle name="dots" cx="449" cy="27.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
-    <circle name="dots" cx="449" cy="57" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+    <g class="dots">
+        <circle name="dots" cx="114" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+        <circle name="dots" cx="195" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+        <circle name="dots" cx="271" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+        <circle name="dots" cx="345.5" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+        <circle name="dots" cx="549" cy="42.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+        <circle name="dots" cx="449" cy="27.5" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+        <circle name="dots" cx="449" cy="57" fill="grey" r="5" opacity="0.5" style="visibility: ''"/>
+    </g>
 
-     <circle name="sideDots" cx="114" cy="73" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
-    <circle name="sideDots" cx="195" cy="73" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
-    <circle name="sideDots" cx="271" cy="73" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
-    <circle name="sideDots" cx="345.5" cy="73" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
-    <circle name="sideDots" cx="549" cy="73" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
-    <circle name="sideDots" cx="449" cy="57" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
-    <circle name="sideDots" cx="449" cy="73" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
+    <g class="sideDots">
+        <circle name="sideDots" cx="114" cy="73" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
+        <circle name="sideDots" cx="195" cy="73" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
+        <circle name="sideDots" cx="271" cy="73" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
+        <circle name="sideDots" cx="345.5" cy="73" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
+        <circle name="sideDots" cx="549" cy="73" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
+        <circle name="sideDots" cx="449" cy="57" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
+        <circle name="sideDots" cx="449" cy="73" fill="grey" r="3" opacity="0.5" style="visibility: hidden"/>
+    </g>
+
 	<g  name="guitar" style="visibility: ''" >
         <g stroke="grey">
             <line x1="2" x2="2" y1="1" y2="84" stroke-width="12" />
@@ -462,243 +533,262 @@
             <line x1="0" x2="610" y1="65" y2="65" stroke-width="2.5" />
             <line x1="0" x2="610" y1="80" y2="80" stroke-width="3" />
         </g>
-        <text x="27.5" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">1</text>
-        <text x="72" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">2</text>
-        <text x="114" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">3</text>
-        <text x="155" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">4</text>
-        <text x="195" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">5</text>
-        <text x="234" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">6</text>
-        <text x="271" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">7</text>
-        <text x="309" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">8</text>
-        <text x="345.5" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">9</text>
-        <text x="380" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">10</text>
-        <text x="415" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">11</text>
-        <text x="449" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">12</text>
-        <text x="483" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">13</text>
-        <text x="517" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">14</text>
-        <text x="549" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">15</text>
-        <text x="582" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">16</text>
-        <!-- open strings -->
-        <circle id="position marker" cx="0" cy="3" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="0" cy="20" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="0" cy="35" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="0" cy="49.2" r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="0" cy="64.6" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="0" cy="80" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <text x="0" y="3.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <text x="0" y="20.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <text x="0" y="35.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <text x="0" y="49.7" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
-        <text x="0" y="65.1" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <text x="0" y="80.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <!-- First Fret -->
-        <circle id="position marker" cx="27.5" cy="3" r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="27.5" cy="20" r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="27.5" cy="35" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="27.5" cy="49.2" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>    
-        <circle id="position marker" cx="27.5" cy="64.6" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="27.5" cy="80" r="6" name="F" style="visibility: hidden; fill: ''"/>    
-        <text x="27.5" y="3.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>    
-        <text x="27.5" y="20.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
-        <text x="27.5" y="35.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
-        <text x="27.5" y="49.7" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
-        <text x="27.5" y="65.1" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <text x="27.5" y="80.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <!-- Second Fret -->
-        <circle id="position marker" cx="72" cy="3" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="72" cy="20" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="72" cy="35" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="72" cy="49.2" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="72" cy="64.6" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="72" cy="80" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <text x="72" y="3.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>    
-        <text x="72" y="20.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
-        <text x="72" y="35.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <text x="72" y="49.7" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <text x="72" y="65.1" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <text x="72" y="80.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <!-- Third Fret -->
-        <circle id="position marker" cx="114" cy="3" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="114" cy="20" r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="114" cy="35" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="114" cy="49.2" r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="114" cy="64.6" r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="114" cy="80" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <text x="114" y="3.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>    
-        <text x="114" y="20.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
-        <text x="114" y="35.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <text x="114" y="49.7" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <text x="114" y="65.1" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
-        <text x="114" y="80.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <!-- Fourth Fret -->
-        <circle id="position marker" cx="155" cy="3" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="155" cy="20" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="155" cy="35" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="155" cy="49.2" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="155" cy="64.6" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="155" cy="80" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <text x="155" y="3.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>    
-        <text x="155" y="20.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
-        <text x="155" y="35.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <text x="155" y="49.7" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <text x="155" y="65.1" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
-        <text x="155" y="80.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
-        <!-- Fifth Fret -->
-        <circle id="position marker" cx="195" cy="3" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="195" cy="20" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="195" cy="35" r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="195" cy="49.2" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="195" cy="64.6" r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="195" cy="80" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <text x="195" y="3.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>    
-        <text x="195" y="20.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <text x="195" y="35.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
-        <text x="195" y="49.7" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <text x="195" y="65.1" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
-        <text x="195" y="80.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <!-- Sixth Fret -->
-        <circle id="position marker" cx="234" cy="3" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="234" cy="20" r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="234" cy="35" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="234" cy="49.2" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="234" cy="64.6" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="234" cy="80" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <text x="234" y="3.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>    
-        <text x="234" y="20.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <text x="234" y="35.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
-        <text x="234" y="49.7" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
-        <text x="234" y="65.1" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
-        <text x="234" y="80.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <!-- Seventh Fret -->
-        <circle id="position marker" cx="271" cy="3" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="271" cy="20" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="271" cy="35" r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="271" cy="49.2" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="271" cy="64.6" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="271" cy="80" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <text x="271" y="3.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>    
-        <text x="271" y="20.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <text x="271" y="35.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
-        <text x="271" y="49.7" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <text x="271" y="65.1" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <text x="271" y="80.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <!-- Eighth Fret -->
-        <circle id="position marker" cx="309" cy="3" r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="309" cy="20" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="309" cy="35" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="309" cy="49.2" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="309" cy="64.6" r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="309" cy="80" r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <text x="309" y="3.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>    
-        <text x="309" y="20.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <text x="309" y="35.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
-        <text x="309" y="49.7" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <text x="309" y="65.1" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <text x="309" y="80.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
-        <!-- Nineth Fret -->
-        <circle id="position marker" cx="345.5" cy="3" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="345.5" cy="20" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="345.5" cy="35" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="345.5" cy="49.2" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="345.5" cy="64.6" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="345.5" cy="80" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <text x="345.5" y="3.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>    
-        <text x="345.5" y="20.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
-        <text x="345.5" y="35.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <text x="345.5" y="49.7" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <text x="345.5" y="65.1" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <text x="345.5" y="80.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
-        <!-- Tenth Fret -->
-        <circle id="position marker" cx="380" cy="3" r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="380" cy="20" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="380" cy="35" r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="380" cy="49.2" r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="380" cy="64.6" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="380" cy="80" r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <text x="380" y="3.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>    
-        <text x="380" y="20.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <text x="380" y="35.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <text x="380" y="49.7" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
-        <text x="380" y="65.1" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <text x="380" y="80.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
-        <!-- Eleventh Fret -->
-        <circle id="position marker" cx="415" cy="3" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="415" cy="20" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="415" cy="35" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="415" cy="49.2" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="415" cy="64.6" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="415" cy="80" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-        <text x="415" y="3.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>    
-        <text x="415" y="20.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <text x="415" y="35.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <text x="415" y="49.7" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
-        <text x="415" y="65.1" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
-        <text x="415" y="80.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
-        <!-- Twelfth Fret -->
-        <circle id="position marker" cx="449" cy="3" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="449" cy="20" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="449" cy="35" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="449" cy="49.2" r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="449" cy="64.6" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="449" cy="80" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <text x="449" y="3.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>    
-        <text x="449" y="20.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <text x="449" y="35.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <text x="449" y="49.7" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
-        <text x="449" y="65.1" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <text x="449" y="80.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <!-- Thirteenth Fret -->
-        <circle id="position marker" cx="483" cy="3" r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="483" cy="20" r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="483" cy="35" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="483" cy="49.2" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="483" cy="64.6" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="483" cy="80" r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <text x="483" y="3.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>    
-        <text x="483" y="20.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
-        <text x="483" y="35.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
-        <text x="483" y="49.7" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
-        <text x="483" y="65.1" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <text x="483" y="80.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <!-- Fourteenth Fret -->
-        <circle id="position marker" cx="517" cy="3" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="517" cy="20" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="517" cy="35" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="517" cy="49.2" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="517" cy="64.6" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="517" cy="80" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <text x="517" y="3.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>    
-        <text x="517" y="20.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
-        <text x="517" y="35.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <text x="517" y="49.7" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <text x="517" y="65.1" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <text x="517" y="80.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <!-- Fifteenth Fret -->
-        <circle id="position marker" cx="549" cy="3" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="549" cy="20" r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="549" cy="35" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="549" cy="49.2" r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="549" cy="64.6" r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="549" cy="80" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <text x="549" y="3.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>    
-        <text x="549" y="20.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
-        <text x="549" y="35.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <text x="549" y="49.7" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <text x="549" y="65.1" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
-        <text x="549" y="80.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <!-- Sixteenth Fret -->
-        <circle id="position marker" cx="582" cy="3" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="582" cy="20" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="582" cy="35" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="582" cy="49.2" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="582" cy="64.6" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="582" cy="80" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <text x="582" y="3.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white' >{noteValues["G#/Ab"]}</text>    
-        <text x="582" y="20.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
-        <text x="582" y="35.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <text x="582" y="49.7" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <text x="582" y="65.1" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
-        <text x="582" y="80.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
+        <g class="fretNumbers">
+            <text x="27.5" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">1</text>
+            <text x="72" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">2</text>
+            <text x="114" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">3</text>
+            <text x="155" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">4</text>
+            <text x="195" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">5</text>
+            <text x="234" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">6</text>
+            <text x="271" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">7</text>
+            <text x="309" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">8</text>
+            <text x="345.5" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">9</text>
+            <text x="380" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">10</text>
+            <text x="415" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">11</text>
+            <text x="449" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">12</text>
+            <text x="483" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">13</text>
+            <text x="517" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">14</text>
+            <text x="549" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">15</text>
+            <text x="582" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">16</text>
+        </g>
+        <g class="open">
+            <circle class="position marker" cx="0" cy="3" r="6" name=""  id="one0" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="0" cy="20" r="6" name=""  id="two0" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="0" cy="35" r="6" name=""  id="three0" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="0" cy="49.2" r="6" name=""  id="four0" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="0" cy="64.6" r="6" name=""  id="five0" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="0" cy="80" r="6" name=""  id="six0" style="visibility: hidden; fill: ''"/>
+            <text x="0" y="3.5" font-size="7" name=""  id="one0" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="0" y="20.5" font-size="7" name=""  id="two0" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="0" y="35.5" font-size="7" name=""  id="three0" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="0" y="49.7" font-size="7" name=""  id="four0" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="0" y="65.1" font-size="7" name=""  id="five0" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="0" y="80.5" font-size="7" name=""  id="six0" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="one">
+            <circle class="position marker" cx="27.5" cy="3" r="6" name=""  id="one1" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="27.5" cy="20" r="6" name=""  id="two1" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="27.5" cy="35" r="6" name=""  id="three1" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="27.5" cy="49.2" r="6" name=""  id="four1" style="visibility: hidden; fill: ''"/>    
+            <circle class="position marker" cx="27.5" cy="64.6" r="6" name=""  id="five1" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="27.5" cy="80" r="6" name=""  id="six1" style="visibility: hidden; fill: ''"/>    
+            <text x="27.5" y="3.5" font-size="7" name=""  id="one1" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="27.5" y="20.5" font-size="7" name=""  id="two1" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="27.5" y="35.5" font-size="7" name=""  id="three1" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="27.5" y="49.7" font-size="7" name=""  id="four1" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="27.5" y="65.1" font-size="7" name=""  id="five1" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="27.5" y="80.5" font-size="7" name=""  id="six1" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="two">
+            <circle class="position marker" cx="72" cy="3" r="6" name=""  id="one2" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="72" cy="20" r="6" name=""  id="two2" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="72" cy="35" r="6" name=""  id="three2" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="72" cy="49.2" r="6" name=""  id="four2" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="72" cy="64.6" r="6" name=""  id="five2" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="72" cy="80" r="6" name=""  id="six2" style="visibility: hidden; fill: ''"/>
+            <text x="72" y="3.5" font-size="7" name=""  id="one2" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="72" y="20.5" font-size="7" name=""  id="two2" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="72" y="35.5" font-size="7" name=""  id="three2" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="72" y="49.7" font-size="7" name=""  id="four2" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="72" y="65.1" font-size="7" name=""  id="five2" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="72" y="80.5" font-size="7" name=""  id="six2" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="three">
+            <circle class="position marker" cx="114" cy="3" r="6" name=""  id="one3" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="114" cy="20" r="6" name=""  id="two3" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="114" cy="35" r="6" name=""  id="three3" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="114" cy="49.2" r="6" name=""  id="four3" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="114" cy="64.6" r="6" name=""  id="five3" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="114" cy="80" r="6" name=""  id="six3" style="visibility: hidden; fill: ''"/>
+            <text x="114" y="3.5" font-size="7" name=""  id="one3" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="114" y="20.5" font-size="7" name=""  id="two3" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="114" y="35.5" font-size="7" name=""  id="three3" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="114" y="49.7" font-size="7" name=""  id="four3" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="114" y="65.1" font-size="7" name=""  id="five3" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="114" y="80.5" font-size="7" name=""  id="six3" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="four">
+            <circle class="position marker" cx="155" cy="3" r="6" name=""  id="one4" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="155" cy="20" r="6" name=""  id="two4" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="155" cy="35" r="6" name=""  id="three4" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="155" cy="49.2" r="6" name=""  id="four4" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="155" cy="64.6" r="6" name=""  id="five4" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="155" cy="80" r="6" name=""  id="six4" style="visibility: hidden; fill: ''"/>
+            <text x="155" y="3.5" font-size="7" name=""  id="one4" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="155" y="20.5" font-size="7" name=""  id="two4" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="155" y="35.5" font-size="7" name=""  id="three4" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="155" y="49.7" font-size="7" name=""  id="four4" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="155" y="65.1" font-size="7" name=""  id="five4" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="155" y="80.5" font-size="7" name=""  id="six4" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="five">
+            <circle class="position marker" cx="195" cy="3" r="6" name=""  id="one5" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="195" cy="20" r="6" name=""  id="two5" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="195" cy="35" r="6" name=""  id="three5" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="195" cy="49.2" r="6" name=""  id="four5" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="195" cy="64.6" r="6" name=""  id="five5" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="195" cy="80" r="6" name=""  id="six5" style="visibility: hidden; fill: ''"/>
+            <text x="195" y="3.5" font-size="7" name=""  id="one5" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="195" y="20.5" font-size="7" name=""  id="two5" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="195" y="35.5" font-size="7" name=""  id="three5" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="195" y="49.7" font-size="7" name=""  id="four5" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="195" y="65.1" font-size="7" name=""  id="five5" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="195" y="80.5" font-size="7" name=""  id="six5" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="six">
+            <circle class="position marker" cx="234" cy="3" r="6" name=""  id="one6" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="234" cy="20" r="6" name=""  id="two6" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="234" cy="35" r="6" name=""  id="three6" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="234" cy="49.2" r="6" name=""  id="four6" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="234" cy="64.6" r="6" name=""  id="five6" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="234" cy="80" r="6" name=""  id="six6" style="visibility: hidden; fill: ''"/>
+            <text x="234" y="3.5" font-size="7" name=""  id="one6" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="234" y="20.5" font-size="7" name=""  id="two6" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="234" y="35.5" font-size="7" name=""  id="three6" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="234" y="49.7" font-size="7" name=""  id="four6" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="234" y="65.1" font-size="7" name=""  id="five6" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="234" y="80.5" font-size="7" name=""  id="six6" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="seven">
+            <circle class="position marker" cx="271" cy="3" r="6" name=""  id="one7" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="271" cy="20" r="6" name=""  id="two7" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="271" cy="35" r="6" name=""  id="three7" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="271" cy="49.2" r="6" name=""  id="four7" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="271" cy="64.6" r="6" name=""  id="five7" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="271" cy="80" r="6" name=""  id="six7" style="visibility: hidden; fill: ''"/>
+            <text x="271" y="3.5" font-size="7" name=""  id="one7" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="271" y="20.5" font-size="7" name=""  id="two7" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="271" y="35.5" font-size="7" name=""  id="three7" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="271" y="49.7" font-size="7" name=""  id="four7" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="271" y="65.1" font-size="7" name=""  id="five7" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="271" y="80.5" font-size="7" name=""  id="six7" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="eight">
+            <circle class="position marker" cx="309" cy="3" r="6" name=""  id="one8" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="309" cy="20" r="6" name=""  id="two8" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="309" cy="35" r="6" name=""  id="three8" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="309" cy="49.2" r="6" name=""  id="four8" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="309" cy="64.6" r="6" name=""  id="five8" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="309" cy="80" r="6" name=""  id="six8" style="visibility: hidden; fill: ''"/>
+            <text x="309" y="3.5" font-size="7" name=""  id="one8" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="309" y="20.5" font-size="7" name=""  id="two8" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="309" y="35.5" font-size="7" name=""  id="three8" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="309" y="49.7" font-size="7" name=""  id="four8" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="309" y="65.1" font-size="7" name=""  id="five8" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="309" y="80.5" font-size="7" name=""  id="six8" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="nine">
+            <circle class="position marker" cx="345.5" cy="3" r="6" name=""  id="one9" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="345.5" cy="20" r="6" name=""  id="two9" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="345.5" cy="35" r="6" name=""  id="three9" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="345.5" cy="49.2" r="6" name=""  id="four9" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="345.5" cy="64.6" r="6" name=""  id="five9" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="345.5" cy="80" r="6" name=""  id="six9" style="visibility: hidden; fill: ''"/>
+            <text x="345.5" y="3.5" font-size="7" name=""  id="one9" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="345.5" y="20.5" font-size="7" name=""  id="two9" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="345.5" y="35.5" font-size="7" name=""  id="three9" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="345.5" y="49.7" font-size="7" name=""  id="four9" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="345.5" y="65.1" font-size="7" name=""  id="five9" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="345.5" y="80.5" font-size="7" name=""  id="six9" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="ten">
+            <circle class="position marker" cx="380" cy="3" r="6" name=""  id="one10" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="380" cy="20" r="6" name=""  id="two10" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="380" cy="35" r="6" name=""  id="three10" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="380" cy="49.2" r="6" name=""  id="four10" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="380" cy="64.6" r="6" name=""  id="five10" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="380" cy="80" r="6" name=""  id="six10" style="visibility: hidden; fill: ''"/>
+            <text x="380" y="3.5" font-size="7" name=""  id="one10" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="380" y="20.5" font-size="7" name=""  id="two10" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="380" y="35.5" font-size="7" name=""  id="three10" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="380" y="49.7" font-size="7" name=""  id="four10" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="380" y="65.1" font-size="7" name=""  id="five10" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="380" y="80.5" font-size="7" name=""  id="six10" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="eleven">
+            <circle class="position marker" cx="415" cy="3" r="6" name=""  id="one11" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="415" cy="20" r="6" name=""  id="two11" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="415" cy="35" r="6" name=""  id="three11" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="415" cy="49.2" r="6" name=""  id="four11" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="415" cy="64.6" r="6" name=""  id="five11" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="415" cy="80" r="6" name=""  id="six11" style="visibility: hidden; fill: ''"/>
+            <text x="415" y="3.5" font-size="7" name=""  id="one11" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="415" y="20.5" font-size="7" name=""  id="two11" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="415" y="35.5" font-size="7" name=""  id="three11" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="415" y="49.7" font-size="7" name=""  id="four11" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="415" y="65.1" font-size="7" name=""  id="five11" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="415" y="80.5" font-size="7" name=""  id="six11" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="twelve">
+            <circle class="position marker" cx="449" cy="3" r="6" name=""  id="one12" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="449" cy="20" r="6" name=""  id="two12" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="449" cy="35" r="6" name=""  id="three12" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="449" cy="49.2" r="6" name=""  id="four12" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="449" cy="64.6" r="6" name=""  id="five12" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="449" cy="80" r="6" name=""  id="six12" style="visibility: hidden; fill: ''"/>
+            <text x="449" y="3.5" font-size="7" name=""  id="one12" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="449" y="20.5" font-size="7" name=""  id="two12" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="449" y="35.5" font-size="7" name=""  id="three12" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="449" y="49.7" font-size="7" name=""  id="four12" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="449" y="65.1" font-size="7" name=""  id="five12" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="449" y="80.5" font-size="7" name=""  id="six12" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="thirteen">
+            <circle class="position marker" cx="483" cy="3" r="6" name=""  id="one13" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="483" cy="20" r="6" name=""  id="two13" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="483" cy="35" r="6" name=""  id="three13" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="483" cy="49.2" r="6" name=""  id="four13" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="483" cy="64.6" r="6" name=""  id="five13" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="483" cy="80" r="6" name=""  id="six13" style="visibility: hidden; fill: ''"/>
+            <text x="483" y="3.5" font-size="7" name=""  id="one13" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="483" y="20.5" font-size="7" name=""  id="two13" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="483" y="35.5" font-size="7" name=""  id="three13" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="483" y="49.7" font-size="7" name=""  id="four13" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="483" y="65.1" font-size="7" name=""  id="five13" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="483" y="80.5" font-size="7" name=""  id="six13" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="fourteen">
+            <circle class="position marker" cx="517" cy="3" r="6" name=""  id="one14" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="517" cy="20" r="6" name=""  id="two14" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="517" cy="35" r="6" name=""  id="three14" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="517" cy="49.2" r="6" name=""  id="four14" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="517" cy="64.6" r="6" name=""  id="five14" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="517" cy="80" r="6" name=""  id="six14" style="visibility: hidden; fill: ''"/>
+            <text x="517" y="3.5" font-size="7" name=""  id="one14" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="517" y="20.5" font-size="7" name=""  id="two14" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="517" y="35.5" font-size="7" name=""  id="three14" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="517" y="49.7" font-size="7" name=""  id="four14" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="517" y="65.1" font-size="7" name=""  id="five14" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="517" y="80.5" font-size="7" name=""  id="six14" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="fifteen">
+            <circle class="position marker" cx="549" cy="3" r="6" name=""  id="one15" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="549" cy="20" r="6" name=""  id="two15" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="549" cy="35" r="6" name=""  id="three15" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="549" cy="49.2" r="6" name=""  id="four15" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="549" cy="64.6" r="6" name=""  id="five15" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="549" cy="80" r="6" name=""  id="six15" style="visibility: hidden; fill: ''"/>
+            <text x="549" y="3.5" font-size="7" name=""  id="one15" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>    
+            <text x="549" y="20.5" font-size="7" name=""  id="two15" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="549" y="35.5" font-size="7" name=""  id="three15" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="549" y="49.7" font-size="7" name=""  id="four15" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="549" y="65.1" font-size="7" name=""  id="five15" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="549" y="80.5" font-size="7" name=""  id="six15" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="sixteen">
+            <circle class="position marker" cx="582" cy="3" r="6" name=""  id="one16" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="582" cy="20" r="6" name=""  id="two16" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="582" cy="35" r="6" name=""  id="three16" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="582" cy="49.2" r="6" name=""  id="four16" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="582" cy="64.6" r="6" name=""  id="five16" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="582" cy="80" r="6" name=""  id="six16" style="visibility: hidden; fill: ''"/>
+            <text x="582" y="3.5" font-size="7" name=""  id="one16" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white' ></text>    
+            <text x="582" y="20.5" font-size="7" name=""  id="two16" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="582" y="35.5" font-size="7" name=""  id="three16" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="582" y="49.7" font-size="7" name=""  id="four16" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="582" y="65.1" font-size="7" name=""  id="five16" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="582" y="80.5" font-size="7" name=""  id="six16" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
     </g>
     <g  name="bass" style="visibility: hidden" >
         <g stroke="grey">
@@ -724,182 +814,296 @@
             <line x1="0" x2="610" y1="57" y2="56" stroke-width="5.5" />
             <line x1="0" x2="610" y1="80" y2="80" stroke-width="7" />
         </g>
-        <text x="27.5" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">1</text>
-        <text x="72" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">2</text>
-        <text x="114" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">3</text>
-        <text x="155" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">4</text>
-        <text x="195" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">5</text>
-        <text x="234" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">6</text>
-        <text x="271" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">7</text>
-        <text x="309" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">8</text>
-        <text x="345.5" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">9</text>
-        <text x="380" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">10</text>
-        <text x="415" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">11</text>
-        <text x="449" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">12</text>
-        <text x="483" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">13</text>
-        <text x="517" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">14</text>
-        <text x="549" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">15</text>
-        <text x="582" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">16</text>
-        <!-- open strings -->
-        <circle id="position marker" cx="0" cy="3" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="0" cy="29" r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="0" cy="56" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="0" cy="80" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <text x="0" y="3.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <text x="0" y="29.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
-        <text x="0" y="56.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <text x="0" y="80.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <!-- First Fret -->
-        <circle id="position marker" cx="27.5" cy="3" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="27.5" cy="29"r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>    
-        <circle id="position marker" cx="27.5" cy="56" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="27.5" cy="80" r="6" name="F" style="visibility: hidden; fill: ''"/>    
-        <text x="27.5" y="3.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
-        <text x="27.5" y="29.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
-        <text x="27.5" y="56.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <text x="27.5" y="80.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <!-- Second Fret -->
-        <circle id="position marker" cx="72" cy="3" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="72" cy="29"r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="72" cy="56" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="72" cy="80" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <text x="72" y="3.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <text x="72" y="29.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <text x="72" y="56.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <text x="72" y="80.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <!-- Third Fret -->
-        <circle id="position marker" cx="114" cy="3" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="114" cy="29"r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="114" cy="56" r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="114" cy="80" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <text x="114" y="3.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <text x="114" y="29.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <text x="114" y="56.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
-        <text x="114" y="80.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <!-- Fourth Fret -->
-        <circle id="position marker" cx="155" cy="3" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="155" cy="29"r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="155" cy="56" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="155" cy="80" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <text x="155" y="3.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <text x="155" y="29.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <text x="155" y="56.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
-        <text x="155" y="80.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
-        <!-- Fifth Fret -->
-        <circle id="position marker" cx="195" cy="3" r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="195" cy="29"r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="195" cy="56" r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="195" cy="80" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <text x="195" y="3.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
-        <text x="195" y="29.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <text x="195" y="56.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
-        <text x="195" y="80.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <!-- Sixth Fret -->
-        <circle id="position marker" cx="234" cy="3" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="234" cy="29"r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="234" cy="56" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="234" cy="80" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <text x="234" y="3.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
-        <text x="234" y="29.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
-        <text x="234" y="56.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
-        <text x="234" y="80.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <!-- Seventh Fret -->
-        <circle id="position marker" cx="271" cy="3" r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="271" cy="29"r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="271" cy="56" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="271" cy="80" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <text x="271" y="3.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
-        <text x="271" y="29.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <text x="271" y="56.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <text x="271" y="80.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <!-- Eighth Fret -->
-        <circle id="position marker" cx="309" cy="3" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="309" cy="29"r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="309" cy="56" r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="309" cy="80" r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <text x="309" y="3.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
-        <text x="309" y="29.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <text x="309" y="56.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <text x="309" y="80.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
-        <!-- Nineth Fret -->
-        <circle id="position marker" cx="345.5" cy="3" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="345.5" cy="29"r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="345.5" cy="56" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="345.5" cy="80" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <text x="345.5" y="3.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <text x="345.5" y="29.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <text x="345.5" y="56.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <text x="345.5" y="80.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
-        <!-- Tenth Fret -->
-        <circle id="position marker" cx="380" cy="3" r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="380" cy="29"r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="380" cy="56" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="380" cy="80" r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <text x="380" y="3.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <text x="380" y="29.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
-        <text x="380" y="56.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <text x="380" y="80.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
-        <!-- Eleventh Fret -->
-        <circle id="position marker" cx="415" cy="3" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="415" cy="29"r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="415" cy="56" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="415" cy="80" r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-        <text x="415" y="3.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <text x="415" y="29.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
-        <text x="415" y="56.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
-        <text x="415" y="80.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
-        <!-- Twelfth Fret -->
-        <circle id="position marker" cx="449" cy="3" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="449" cy="29"r="6" name="D" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="449" cy="56" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="449" cy="80" r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <text x="449" y="3.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <text x="449" y="29.5" font-size="7" name="D" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D"]}</text>
-        <text x="449" y="56.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <text x="449" y="80.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <!-- Thirteenth Fret -->
-        <circle id="position marker" cx="483" cy="3" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="483" cy="29"r="6" name="D#/Eb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="483" cy="56" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="483" cy="80" r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <text x="483" y="3.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
-        <text x="483" y="29.5" font-size="7" name="D#/Eb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["D#/Eb"]}</text>
-        <text x="483" y="56.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <text x="483" y="80.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <!-- Fourteenth Fret -->
-        <circle id="position marker" cx="517" cy="3" r="6" name="A" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="517" cy="29"r="6" name="E" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="517" cy="56" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="517" cy="80" r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <text x="517" y="3.5" font-size="7" name="A" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A"]}</text>
-        <text x="517" y="29.5" font-size="7" name="E" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["E"]}</text>
-        <text x="517" y="56.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <text x="517" y="80.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <!-- Fifteenth Fret -->
-        <circle id="position marker" cx="549" cy="3" r="6" name="A#/Bb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="549" cy="29"r="6" name="F" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="549" cy="56" r="6" name="C" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="549" cy="80" r="6" name="G" style="visibility: hidden; fill: ''"/>
-        <text x="549" y="3.5" font-size="7" name="A#/Bb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["A#/Bb"]}</text>
-        <text x="549" y="29.5" font-size="7" name="F" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F"]}</text>
-        <text x="549" y="56.5" font-size="7" name="C" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C"]}</text>
-        <text x="549" y="80.5" font-size="7" name="G" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G"]}</text>
-        <!-- Sixteenth Fret -->
-        <circle id="position marker" cx="582" cy="3" r="6" name="B" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="582" cy="29"r="6" name="F#/Gb" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="582" cy="56" r="6" name="C#/Db" style="visibility: hidden; fill: ''"/>
-        <circle id="position marker" cx="582" cy="80" r="6" name="G#/Ab" style="visibility: hidden; fill: ''"/>
-        <text x="582" y="3.5" font-size="7" name="B" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["B"]}</text>
-        <text x="582" y="29.5" font-size="7" name="F#/Gb" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["F#/Gb"]}</text>
-        <text x="582" y="56.5" font-size="7" name="C#/Db" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["C#/Db"]}</text>
-        <text x="582" y="80.5" font-size="7" name="G#/Ab" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'>{noteValues["G#/Ab"]}</text>
+        <g class="fretNumbers">
+            <text x="27.5" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">1</text>
+            <text x="72" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">2</text>
+            <text x="114" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">3</text>
+            <text x="155" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">4</text>
+            <text x="195" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">5</text>
+            <text x="234" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">6</text>
+            <text x="271" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">7</text>
+            <text x="309" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">8</text>
+            <text x="345.5" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">9</text>
+            <text x="380" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">10</text>
+            <text x="415" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">11</text>
+            <text x="449" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">12</text>
+            <text x="483" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">13</text>
+            <text x="517" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">14</text>
+            <text x="549" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">15</text>
+            <text x="582" y="95" font-size="10" text-anchor="middle" dominant-baseline="middle">16</text>
+        </g>
+        <g class="open">
+            <circle class="positio>n marker" cx="0" cy="3" r="6" name=""  id="bassone0" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="0" cy="29" r="6" name=""  id="basstwo0" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="0" cy="56" r="6" name=""  id="bassthree0" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="0" cy="80" r="6" name=""  id="bassfour0" style="visibility: hidden; fill: ''"/>
+            <text x="0" y="3.5" font-size="7" name=""  id="bassone0" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="0" y="29.5" font-size="7" name=""  id="basstwo0" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="0" y="56.5" font-size="7" name=""  id="bassthree0" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="0" y="80.5" font-size="7" name=""  id="bassfour0" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="one">
+            <circle class="position marker" cx="27.5" cy="3" r="6" name=""  id="bassone1" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="27.5" cy="29"r="6" name=""  id="basstwo1" style="visibility: hidden; fill: ''"/>    
+            <circle class="position marker" cx="27.5" cy="56" r="6" name=""  id="bassthree1" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="27.5" cy="80" r="6" name=""  id="bassfour1" style="visibility: hidden; fill: ''"/>    
+            <text x="27.5" y="3.5" font-size="7" name=""  id="bassone1" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="27.5" y="29.5" font-size="7" name=""  id="basstwo1" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="27.5" y="56.5" font-size="7" name=""  id="bassthree1" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="27.5" y="80.5" font-size="7" name=""  id="bassfour1" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="two">
+            <circle class="position marker" cx="72" cy="3" r="6" name=""  id="bassone2" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="72" cy="29"r="6" name=""  id="basstwo2" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="72" cy="56" r="6" name=""  id="bassthree2" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="72" cy="80" r="6" name=""  id="bassfour2" style="visibility: hidden; fill: ''"/>
+            <text x="72" y="3.5" font-size="7" name=""  id="bassone2" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="72" y="29.5" font-size="7" name=""  id="basstwo2" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="72" y="56.5" font-size="7" name=""  id="bassthree2" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="72" y="80.5" font-size="7" name=""  id="bassfour2" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="three">
+            <circle class="position marker" cx="114" cy="3" r="6" name=""  id="bassone3" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="114" cy="29"r="6" name=""  id="basstwo3" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="114" cy="56" r="6" name=""  id="bassthree3" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="114" cy="80" r="6" name=""  id="bassfour3" style="visibility: hidden; fill: ''"/>
+            <text x="114" y="3.5" font-size="7" name=""  id="bassone3" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="114" y="29.5" font-size="7" name=""  id="basstwo3" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="114" y="56.5" font-size="7" name=""  id="bassthree3" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="114" y="80.5" font-size="7" name=""  id="bassfour3" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="four">
+            <circle class="position marker" cx="155" cy="3" r="6" name=""  id="bassone4" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="155" cy="29"r="6" name=""  id="basstwo4" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="155" cy="56" r="6" name=""  id="bassthree4" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="155" cy="80" r="6" name=""  id="bassfour4" style="visibility: hidden; fill: ''"/>
+            <text x="155" y="3.5" font-size="7" name=""  id="bassone4" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="155" y="29.5" font-size="7" name=""  id="basstwo4" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="155" y="56.5" font-size="7" name=""  id="bassthree4" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="155" y="80.5" font-size="7" name=""  id="bassfour4" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="five">
+            <circle class="position marker" cx="195" cy="3" r="6" name=""  id="bassone5" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="195" cy="29"r="6" name=""  id="basstwo5" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="195" cy="56" r="6" name=""  id="bassthree5" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="195" cy="80" r="6" name=""  id="bassfour5" style="visibility: hidden; fill: ''"/>
+            <text x="195" y="3.5" font-size="7" name=""  id="bassone5" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="195" y="29.5" font-size="7" name=""  id="basstwo5" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="195" y="56.5" font-size="7" name=""  id="bassthree5" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="195" y="80.5" font-size="7" name=""  id="bassfour5" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="six">
+            <circle class="position marker" cx="234" cy="3" r="6" name=""  id="bassone6" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="234" cy="29"r="6" name=""  id="basstwo6" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="234" cy="56" r="6" name=""  id="bassthree6" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="234" cy="80" r="6" name=""  id="bassfour6" style="visibility: hidden; fill: ''"/>
+            <text x="234" y="3.5" font-size="7" name=""  id="bassone6" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="234" y="29.5" font-size="7" name=""  id="basstwo6" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="234" y="56.5" font-size="7" name=""  id="bassthree6" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="234" y="80.5" font-size="7" name=""  id="bassfour6" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="seven">
+            <circle class="position marker" cx="271" cy="3" r="6" name=""  id="bassone7" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="271" cy="29"r="6" name=""  id="basstwo7" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="271" cy="56" r="6" name=""  id="bassthree7" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="271" cy="80" r="6" name=""  id="bassfour7" style="visibility: hidden; fill: ''"/>
+            <text x="271" y="3.5" font-size="7" name=""  id="bassone7" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="271" y="29.5" font-size="7" name=""  id="basstwo7" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="271" y="56.5" font-size="7" name=""  id="bassthree7" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="271" y="80.5" font-size="7" name=""  id="bassfour7" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="eight">
+            <circle class="position marker" cx="309" cy="3" r="6" name=""  id="bassone8" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="309" cy="29"r="6" name=""  id="basstwo8" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="309" cy="56" r="6" name=""  id="bassthree8" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="309" cy="80" r="6" name=""  id="bassfour8" style="visibility: hidden; fill: ''"/>
+            <text x="309" y="3.5" font-size="7" name=""  id="bassone8" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="309" y="29.5" font-size="7" name=""  id="basstwo8" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="309" y="56.5" font-size="7" name=""  id="bassthree8" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="309" y="80.5" font-size="7" name=""  id="bassfour8" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="nine">
+            <circle class="position marker" cx="345.5" cy="3" r="6" name=""  id="bassone9" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="345.5" cy="29"r="6" name=""  id="basstwo9" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="345.5" cy="56" r="6" name=""  id="bassthree9" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="345.5" cy="80" r="6" name=""  id="bassfour9" style="visibility: hidden; fill: ''"/>
+            <text x="345.5" y="3.5" font-size="7" name=""  id="bassone9" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="345.5" y="29.5" font-size="7" name=""  id="basstwo9" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="345.5" y="56.5" font-size="7" name=""  id="bassthree9" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="345.5" y="80.5" font-size="7" name=""  id="bassfour9" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="ten">
+            <circle class="position marker" cx="380" cy="3" r="6" name=""  id="bassone10" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="380" cy="29"r="6" name=""  id="basstwo10" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="380" cy="56" r="6" name=""  id="bassthree10" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="380" cy="80" r="6" name=""  id="bassfour10" style="visibility: hidden; fill: ''"/>
+            <text x="380" y="3.5" font-size="7" name=""  id="bassone10" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="380" y="29.5" font-size="7" name=""  id="basstwo10" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="380" y="56.5" font-size="7" name=""  id="bassthree10" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="380" y="80.5" font-size="7" name=""  id="bassfour10" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="eleven">
+            <circle class="position marker" cx="415" cy="3" r="6" name=""  id="bassone11" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="415" cy="29"r="6" name=""  id="basstwo11" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="415" cy="56" r="6" name=""  id="bassthree11" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="415" cy="80" r="6" name=""  id="bassfour11" style="visibility: hidden; fill: ''"/>
+            <text x="415" y="3.5" font-size="7" name=""  id="bassone11" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="415" y="29.5" font-size="7" name=""  id="basstwo11" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="415" y="56.5" font-size="7" name=""  id="bassthree11" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="415" y="80.5" font-size="7" name=""  id="bassfour11" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="twelve">
+            <circle class="position marker" cx="449" cy="3" r="6" name=""  id="bassone12" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="449" cy="29"r="6" name=""  id="basstwo12" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="449" cy="56" r="6" name=""  id="bassthree12" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="449" cy="80" r="6" name=""  id="bassfour12" style="visibility: hidden; fill: ''"/>
+            <text x="449" y="3.5" font-size="7" name=""  id="bassone12" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="449" y="29.5" font-size="7" name=""  id="basstwo12" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="449" y="56.5" font-size="7" name=""  id="bassthree12" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="449" y="80.5" font-size="7" name=""  id="bassfour12" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="thirteen">
+            <circle class="position marker" cx="483" cy="3" r="6" name=""  id="bassone13" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="483" cy="29"r="6" name=""  id="basstwo13" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="483" cy="56" r="6" name=""  id="bassthree13" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="483" cy="80" r="6" name=""  id="bassfour13" style="visibility: hidden; fill: ''"/>
+            <text x="483" y="3.5" font-size="7" name=""  id="bassone13" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="483" y="29.5" font-size="7" name=""  id="basstwo13" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="483" y="56.5" font-size="7" name=""  id="bassthree13" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="483" y="80.5" font-size="7" name=""  id="bassfour13" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="fourteen">
+            <circle class="position marker" cx="517" cy="3" r="6" name=""  id="bassone14" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="517" cy="29"r="6" name=""  id="basstwo14" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="517" cy="56" r="6" name=""  id="bassthree14" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="517" cy="80" r="6" name=""  id="bassfour14" style="visibility: hidden; fill: ''"/>
+            <text x="517" y="3.5" font-size="7" name=""  id="bassone14" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="517" y="29.5" font-size="7" name=""  id="basstwo14" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="517" y="56.5" font-size="7" name=""  id="bassthree14" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="517" y="80.5" font-size="7" name=""  id="bassfour14" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="fifteen">
+            <circle class="position marker" cx="549" cy="3" r="6" name=""  id="bassone15" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="549" cy="29"r="6" name=""  id="basstwo15" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="549" cy="56" r="6" name=""  id="bassthree15" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="549" cy="80" r="6" name=""  id="bassfour15" style="visibility: hidden; fill: ''"/>
+            <text x="549" y="3.5" font-size="7" name=""  id="bassone15" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="549" y="29.5" font-size="7" name=""  id="basstwo15" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="549" y="56.5" font-size="7" name=""  id="bassthree15" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="549" y="80.5" font-size="7" name=""  id="bassfour15" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
+        <g class="sixteen">
+            <circle class="position marker" cx="582" cy="3" r="6" name=""  id="bassone16" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="582" cy="29"r="6" name=""  id="basstwo16" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="582" cy="56" r="6" name=""  id="bassthree16" style="visibility: hidden; fill: ''"/>
+            <circle class="position marker" cx="582" cy="80" r="6" name=""  id="bassfour16" style="visibility: hidden; fill: ''"/>
+            <text x="582" y="3.5" font-size="7" name=""  id="bassone16" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="582" y="29.5" font-size="7" name=""  id="basstwo16" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="582" y="56.5" font-size="7" name=""  id="bassthree16" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+            <text x="582" y="80.5" font-size="7" name=""  id="bassfour16" text-anchor="middle" dominant-baseline="middle" style="visibility: hidden" fill= 'white'></text>
+        </g>
     </g>
 </svg>
 
 <Piano {noteValues}/>
 
 <hr />
-<form class="form" id="ChordForm" on:submit|preventDefault={formSubmit}>
+<form id="tuningForm">
+    <h2>Tuning (by string): </h2>
+    <label for="6th String">6 (Bass 4):</label>
+    <select id="6th String" name="6th String" bind:value={tuningNotes["6th String"]}>
+        <option value="A">A</option>
+        <option value="A#/Bb">A#/Bb</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="C#/Db">C#/Db</option>
+        <option value="D">D</option>
+        <option value="D#/Eb">D#/Eb</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="F#/Gb">F#/Gb</option>
+        <option value="G">G</option>
+        <option value="G#/Ab">G#/Ab</option>
+    </select>
+    <label for="5th String">5 (Bass 3):</label>
+    <select id="5th String" name="5th String" bind:value={tuningNotes["5th String"]}>
+        <option value="A">A</option>
+        <option value="A#/Bb">A#/Bb</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="C#/Db">C#/Db</option>
+        <option value="D">D</option>
+        <option value="D#/Eb">D#/Eb</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="F#/Gb">F#/Gb</option>
+        <option value="G">G</option>
+        <option value="G#/Ab">G#/Ab</option>
+    </select>
+    <label for="4th String">4 (Bass 2):</label>
+    <select id="4th String" name="4th String" bind:value={tuningNotes["4th String"]}>
+        <option value="A">A</option>
+        <option value="A#/Bb">A#/Bb</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="C#/Db">C#/Db</option>
+        <option value="D">D</option>
+        <option value="D#/Eb">D#/Eb</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="F#/Gb">F#/Gb</option>
+        <option value="G">G</option>
+        <option value="G#/Ab">G#/Ab</option>
+    </select>
+    <br />
+    <br />
+    <label for="3rd String">3 (Bass 1): &nbsp;</label>
+    <select id="3rd String" name="3rd String" bind:value={tuningNotes["3rd String"]}>
+        <option value="A">A</option>
+        <option value="A#/Bb">A#/Bb</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="C#/Db">C#/Db</option>
+        <option value="D">D</option>
+        <option value="D#/Eb">D#/Eb</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="F#/Gb">F#/Gb</option>
+        <option value="G">G</option>
+        <option value="G#/Ab">G#/Ab</option>
+    </select>
+    <label for="2nd String">&emsp; &emsp; 2:&emsp;</label>
+    <select id="2nd String" name="2nd String" bind:value={tuningNotes["2nd String"]}>
+        <option value="A">A</option>
+        <option value="A#/Bb">A#/Bb</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="C#/Db">C#/Db</option>
+        <option value="D">D</option>
+        <option value="D#/Eb">D#/Eb</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="F#/Gb">F#/Gb</option>
+        <option value="G">G</option>
+        <option value="G#/Ab">G#/Ab</option>
+    </select>
+    <label for="1st String">&emsp;1 (high):</label>
+    <select id="1st String" name="1st String" bind:value={tuningNotes["1st String"]}>
+        <option value="A">A</option>
+        <option value="A#/Bb">A#/Bb</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="C#/Db">C#/Db</option>
+        <option value="D">D</option>
+        <option value="D#/Eb">D#/Eb</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="F#/Gb">F#/Gb</option>
+        <option value="G">G</option>
+        <option value="G#/Ab">G#/Ab</option>
+    </select>
+</form>
+<form id="ChordForm" on:submit|preventDefault={formSubmit}>
     <label for="ChordNote">Choose a Chord Note:</label>
     <select id="ChordNote" name="ChordNote" bind:value={chord.chordNote}>
         <option value="">Choose a Note</option>
@@ -1191,10 +1395,6 @@
         font-weight: bolder;
         background-color: #FDFFFC;
         color: #031926;   
-    }
-    h1 {
-        font-size: 75px;
-        font-weight: bolder;        
     }
     hr{
         margin: 15px;
