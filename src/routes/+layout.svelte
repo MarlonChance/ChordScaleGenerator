@@ -1,12 +1,20 @@
-<nav>
-    <a href="/">Six/Four String</a>
-    <a href="/Seven-Five">Seven/Five String</a>
-    <a href="/Mandolin">Mandolin</a>
-    <a href="/Ukulele">Ukulele</a>
-    <a href="/Banjo">Banjo</a>
-  </nav>
-  <h1>Chord & Scale Finder</h1>
-  <slot></slot>
+<script lang="ts">
+    import { page } from '$app/stores';
+    let path: string;
+
+    $: path = $page.url.pathname;
+
+</script>
+
+<nav id="myNAV">
+    <a class={path === '/' ? 'active' : ''} href="/">Six/Four String</a>
+    <a class={path === '/Seven-Five' ? 'active' : ''} href="/Seven-Five">Seven/Five String</a>
+    <a class={path === '/Mandolin' ? 'active' : ''} href="/Mandolin">Mandolin</a>
+    <a class={path === '/Ukulele' ? 'active' : ''} href="/Ukulele">Ukulele</a>
+    <a class={path === '/Banjo' ? 'active' : ''} href="/Banjo">Banjo</a>
+</nav>
+<h1>Chord & Scale Finder</h1>
+<slot></slot>
 
 <style>
   h1 {
@@ -35,4 +43,8 @@
     background-color: #9DBEBB;
     color: black;
   }
+  nav a.active {
+  background-color: grey;
+  color: white;
+}
 </style>
