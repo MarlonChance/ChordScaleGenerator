@@ -463,12 +463,13 @@
 <hr /> 
 
 <svg viewBox="-15 -20 650 120">
-    <circle cx="45" cy="-15" r="5" fill="red"/>
-    <circle cx="115" cy="-15" r="5" fill="black"/>
-    <circle cx="180" cy="-15" r="5" fill="purple"/>
+    <circle cx="50" cy="-15" r="5" fill="red"/>
+    <circle cx="130" cy="-15" r="5" fill="black"/>
+    <circle cx="215" cy="-15" r="5" fill="purple"/>
     <text x="26" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Root:</text>
-	<text x="82" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Other Notes:</text>
-	<text x="150" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Extensions:</text>
+	<text x="90" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Other Notes:</text>
+	<text x="170" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Extensions:</text>
+    
     <g class="trapezoid">
         <polygon name="trapezoid" points="105,71 105,12 125,22 125,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
         <polygon name="trapezoid" points="184,71 184,12 204,22 204,61" fill="grey" opacity="0.5" style="visibility: hidden"/>
