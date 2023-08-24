@@ -1098,6 +1098,8 @@
         <option value="G">G</option>
         <option value="G#/Ab">G#/Ab</option>
     </select>
+    <br />
+    <br />
     <label for="4th String">4/2:</label>
     <select id="4th String" name="4th String" bind:value={tuningNotes["4th String"]}>
         <option value="A">A</option>
@@ -1112,9 +1114,7 @@
         <option value="F#/Gb">F#/Gb</option>
         <option value="G">G</option>
         <option value="G#/Ab">G#/Ab</option>
-    </select>
-    <br />
-    <br />
+    </select> 
     <label for="3rd String">3/1: &nbsp;</label>
     <select id="3rd String" name="3rd String" bind:value={tuningNotes["3rd String"]}>
         <option value="A">A</option>
@@ -1145,6 +1145,8 @@
         <option value="G">G</option>
         <option value="G#/Ab">G#/Ab</option>
     </select>
+    <br />
+    <br />
     <label for="1st String">1:</label>
     <select id="1st String" name="1st String" bind:value={tuningNotes["1st String"]}>
         <option value="A">A</option>
