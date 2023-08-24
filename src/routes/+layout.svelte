@@ -7,8 +7,8 @@
 </script>
 
 <nav id="myNAV">
-    <a class={path === '/' ? 'active' : ''} href="/">Guitar/Bass Six/Four String</a>
-    <a class={path === '/Seven-Five' ? 'active' : ''} href="/Seven-Five">Guitar/Bass Seven/Five String</a>
+    <a class={path === '/' ? 'active' : ''} href="/">Guitar/Bass Six/Four</a>
+    <a class={path === '/Seven-Five' ? 'active' : ''} href="/Seven-Five">Guitar/Bass Seven/Five</a>
     <a class={path === '/Mandolin' ? 'active' : ''} href="/Mandolin">Mandolin</a>
     <a class={path === '/Ukulele' ? 'active' : ''} href="/Ukulele">Ukulele</a>
     <a class={path === '/Banjo' ? 'active' : ''} href="/Banjo">Banjo</a>
@@ -18,7 +18,7 @@
 
 <style>
   h1 {
-        font-size: 45px;
+        font-size: 25px;
         font-weight: bolder;        
   }
       /* Add a black background color to the top navigation */
@@ -35,7 +35,7 @@
     text-align: center;
     padding: 4px 6px;
     text-decoration: none;
-    font-size: 12px;
+    font-size: 10px;
     width: 15%;
   }
 
