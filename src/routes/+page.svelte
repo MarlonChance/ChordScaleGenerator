@@ -1428,6 +1428,11 @@
         background-color: #468189;
         border: 0px;
         color: #FDFFFC;
+        border-radius: 8px;
+        padding: 5px 10px;
+        margin-right: 2px;
+        margin-bottom: 15px;
+        font-size: 18px;
     }
     select{
         border: #468189;
