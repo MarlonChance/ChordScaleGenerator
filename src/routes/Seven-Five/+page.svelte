@@ -1052,8 +1052,8 @@
 
 <hr />
 <form id="tuningForm">
-    <h2>Tuning (by string): </h2>
-    <label for="7th String">7 (Bass 5):</label>
+    <h2>Tuning (by string Guitar/Bass): </h2>
+    <label for="7th String">7/5:</label>
     <select id="7th String" name="7th String" bind:value={tuningNotes["7th String"]}>
         <option value="A">A</option>
         <option value="A#/Bb">A#/Bb</option>
@@ -1068,7 +1068,7 @@
         <option value="G">G</option>
         <option value="G#/Ab">G#/Ab</option>
     </select>
-    <label for="6th String">6 (Bass 4):</label>
+    <label for="6th String">6/4:</label>
     <select id="6th String" name="6th String" bind:value={tuningNotes["6th String"]}>
         <option value="A">A</option>
         <option value="A#/Bb">A#/Bb</option>
@@ -1083,7 +1083,7 @@
         <option value="G">G</option>
         <option value="G#/Ab">G#/Ab</option>
     </select>
-    <label for="5th String">5 (Bass 3):</label>
+    <label for="5th String">5/3:</label>
     <select id="5th String" name="5th String" bind:value={tuningNotes["5th String"]}>
         <option value="A" selected>A</option>
         <option value="A#/Bb">A#/Bb</option>
@@ -1098,7 +1098,7 @@
         <option value="G">G</option>
         <option value="G#/Ab">G#/Ab</option>
     </select>
-    <label for="4th String">4 (Bass 2):</label>
+    <label for="4th String">4/2:</label>
     <select id="4th String" name="4th String" bind:value={tuningNotes["4th String"]}>
         <option value="A">A</option>
         <option value="A#/Bb">A#/Bb</option>
@@ -1115,7 +1115,7 @@
     </select>
     <br />
     <br />
-    <label for="3rd String">3 (Bass 1): &nbsp;</label>
+    <label for="3rd String">3/1: &nbsp;</label>
     <select id="3rd String" name="3rd String" bind:value={tuningNotes["3rd String"]}>
         <option value="A">A</option>
         <option value="A#/Bb">A#/Bb</option>
@@ -1130,7 +1130,7 @@
         <option value="G">G</option>
         <option value="G#/Ab">G#/Ab</option>
     </select>
-    <label for="2nd String">&emsp; &emsp; 2:&emsp;</label>
+    <label for="2nd String">2:</label>
     <select id="2nd String" name="2nd String" bind:value={tuningNotes["2nd String"]}>
         <option value="A">A</option>
         <option value="A#/Bb">A#/Bb</option>
@@ -1145,7 +1145,7 @@
         <option value="G">G</option>
         <option value="G#/Ab">G#/Ab</option>
     </select>
-    <label for="1st String">&emsp;1 (high):</label>
+    <label for="1st String">1:</label>
     <select id="1st String" name="1st String" bind:value={tuningNotes["1st String"]}>
         <option value="A">A</option>
         <option value="A#/Bb">A#/Bb</option>
@@ -1481,6 +1481,12 @@
         background-color: #468189;
         border: 0px;
         color: #FDFFFC;
+    }
+    select{
+        border: #468189;
+        border-style: solid;
+        border-radius: 8px;
+        border-width: thin;
     }
 
 </style>

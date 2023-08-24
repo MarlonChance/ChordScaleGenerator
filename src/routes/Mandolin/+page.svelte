@@ -630,7 +630,7 @@
         <option value="G">G</option>
         <option value="G#/Ab">G#/Ab</option>
     </select>
-    <label for="1st String">1 (high):</label>
+    <label for="1st String">1(high):</label>
     <select id="1st String" name="1st String" bind:value={tuningNotes["1st String"]}>
         <option value="A">A</option>
         <option value="A#/Bb">A#/Bb</option>
@@ -951,6 +951,12 @@
         background-color: #468189;
         border: 0px;
         color: #FDFFFC;
+    }
+    select{
+        border: #468189;
+        border-style: solid;
+        border-radius: 8px;
+        border-width: thin;
     }
 
 </style>

@@ -1428,5 +1428,11 @@
         border: 0px;
         color: #FDFFFC;
     }
+    select{
+        border: #468189;
+        border-style: solid;
+        border-radius: 8px;
+        border-width: thin;
+    }
 
 </style>
