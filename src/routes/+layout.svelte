@@ -45,7 +45,7 @@
     color: black;
   }
   nav a.active {
-  background-color: black;
+  background-color: grey;
   color: white;
 }
 </style>
