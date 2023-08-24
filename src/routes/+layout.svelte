@@ -35,7 +35,7 @@
     text-align: center;
     padding: 4px 6px;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 12px;
     width: 15%;
   }
 
