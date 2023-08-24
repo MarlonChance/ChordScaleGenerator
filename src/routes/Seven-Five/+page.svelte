@@ -351,6 +351,7 @@
         let dotsMarkers = document.getElementsByName('dots')
         let sharkFinMarkers = document.getElementsByName('sharkFin')
         let altDotsMarkers = document.getElementsByName('altDots')
+        let lightningMarkers = document.getElementsByName('lightning')
         if(guitarType == 'dots'){
             for ( let i = 0; i < dotsMarkers.length; i++){
                 dotsMarkers[i].style.visibility = ''
@@ -360,6 +361,9 @@
             }
             for ( let i = 0; i < altDotsMarkers.length; i++){
                 altDotsMarkers[i].style.visibility = 'hidden'
+            }
+            for ( let i = 0; i < lightningMarkers.length; i++){
+                lightningMarkers[i].style.visibility = 'hidden'
             }
         }
         if(guitarType == 'sharkFin'){
@@ -372,6 +376,9 @@
             for ( let i = 0; i < altDotsMarkers.length; i++){
                 altDotsMarkers[i].style.visibility = 'hidden'
             }
+            for ( let i = 0; i < lightningMarkers.length; i++){
+                lightningMarkers[i].style.visibility = 'hidden'
+            }
         }
         if(guitarType == 'altDots'){
             for ( let i = 0; i < dotsMarkers.length; i++){
@@ -382,6 +389,23 @@
             }
             for ( let i = 0; i < altDotsMarkers.length; i++){
                 altDotsMarkers[i].style.visibility = ''
+            }
+            for ( let i = 0; i < lightningMarkers.length; i++){
+                lightningMarkers[i].style.visibility = 'hidden'
+            }
+        }
+        if(guitarType == 'lightning'){
+            for ( let i = 0; i < dotsMarkers.length; i++){
+                dotsMarkers[i].style.visibility = 'hidden'
+            }
+            for ( let i = 0; i < sharkFinMarkers.length; i++){
+                sharkFinMarkers[i].style.visibility = 'hidden'
+            }
+            for ( let i = 0; i < altDotsMarkers.length; i++){
+                altDotsMarkers[i].style.visibility = 'hidden'
+            }
+            for ( let i = 0; i < lightningMarkers.length; i++){
+                lightningMarkers[i].style.visibility = ''
             }
         }
     }
@@ -450,6 +474,111 @@
     <text x="26" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Root:</text>
 	<text x="90" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Other Notes:</text>
 	<text x="170" y="-14" font-size="10" text-anchor="middle" dominant-baseline="middle">Extensions:</text>
+
+    <g class="lightning">    
+        <g transform="translate(9 -30)" name="lightning" style="visibility: hidden">
+            <svg width="150" height="150" viewBox="-100 -100 500 500">        
+                <path
+                    id="bolt"
+                    d="
+                        M 252 52 L 279 52 
+                        L 255 107 L 271 107 
+                        L 245 156 L 263 156 
+                        L 224 238 L 241 174 
+                        L 232 174 L 249 124 
+                        L 237 124 L 252 52"
+                    stroke="grey"
+                    stroke-width="5"
+                    opacity="0.5"
+                    fill="grey"/>
+            </svg>
+        </g>
+        <g transform="translate(91 -30)" name="lightning" style="visibility: hidden">
+            <svg width="150" height="150" viewBox="-100 -100 500 500">        
+                <path
+                    id="bolt"
+                    d="
+                        M 252 52 L 279 52 
+                        L 255 107 L 271 107 
+                        L 245 156 L 263 156 
+                        L 224 238 L 241 174 
+                        L 232 174 L 249 124 
+                        L 237 124 L 252 52"
+                    stroke="grey"
+                    stroke-width="5"
+                    opacity="0.5"
+                    fill="grey"/>
+            </svg>
+        </g>
+        <g transform="translate(167 -30)" name="lightning" style="visibility: hidden">
+            <svg width="150" height="150" viewBox="-100 -100 500 500">        
+                <path
+                    id="bolt"
+                    d="
+                        M 252 52 L 279 52 
+                        L 255 107 L 271 107 
+                        L 245 156 L 263 156 
+                        L 224 238 L 241 174 
+                        L 232 174 L 249 124 
+                        L 237 124 L 252 52"
+                    stroke="grey"
+                    stroke-width="5"
+                    opacity="0.5"
+                    fill="grey"/>
+            </svg>
+        </g>
+        <g transform="translate(241 -30)" name="lightning" style="visibility: hidden">
+            <svg width="150" height="150" viewBox="-100 -100 500 500">        
+                <path
+                    id="bolt"
+                    d="
+                        M 252 52 L 279 52 
+                        L 255 107 L 271 107 
+                        L 245 156 L 263 156 
+                        L 224 238 L 241 174 
+                        L 232 174 L 249 124 
+                        L 237 124 L 252 52"
+                    stroke="grey"
+                    stroke-width="5"
+                    opacity="0.5"
+                    fill="grey"/>
+            </svg>
+        </g>
+        <g transform="translate(345 -30)" name="lightning" style="visibility: hidden">
+            <svg width="150" height="150" viewBox="-100 -100 500 500">        
+                <path
+                    id="bolt"
+                    d="
+                        M 252 52 L 279 52 
+                        L 255 107 L 271 107 
+                        L 245 156 L 263 156 
+                        L 224 238 L 241 174 
+                        L 232 174 L 249 124 
+                        L 237 124 L 252 52"
+                    stroke="grey"
+                    stroke-width="5"
+                    opacity="0.5"
+                    fill="grey"/>
+            </svg>
+        </g>
+        <g transform="translate(445 -30)" name="lightning" style="visibility: hidden">
+            <svg width="150" height="150" viewBox="-100 -100 500 500">        
+                <path
+                    id="bolt"
+                    d="
+                        M 252 52 L 279 52 
+                        L 255 107 L 271 107 
+                        L 245 156 L 263 156 
+                        L 224 238 L 241 174 
+                        L 232 174 L 249 124 
+                        L 237 124 L 252 52"
+                    stroke="grey"
+                    stroke-width="5"
+                    opacity="0.5"
+                    fill="grey"/>
+            </svg>
+        </g>
+    </g>
 
     <g class="sharkFin">
         <polygon name="sharkFin" points="98,81 130,3 130,81" fill="grey" opacity="0.5" style="visibility: hidden"/>
@@ -1283,7 +1412,9 @@
         <input type="radio" name="guitar type" value="sharkFin" bind:group={guitarType}/>
         <label for="sharkFin">Shark Fin</label>     
         <input type="radio" name="guitar type" value="altDots" bind:group={guitarType}/>
-        <label for="altDots">Alt Dots</label>        
+        <label for="altDots">Alt Dots</label>  
+        <input type="radio" name="guitar type" value="lightning" bind:group={guitarType}/>
+        <label for="lightning">Lightning</label>        
     </div>    
 </form>
 <hr />
