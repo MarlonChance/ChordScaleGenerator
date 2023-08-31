@@ -9,6 +9,7 @@
 <nav id="myNAV">
     <a class={path === '/' ? 'active' : ''} href="/">Guitar/Bass Six/Four</a>
     <a class={path === '/Seven-Five' ? 'active' : ''} href="/Seven-Five">Guitar/Bass Seven/Five</a>
+    <a class={path === '/Piano' ? 'active' : ''} href="/Piano">Piano</a>
     <a class={path === '/Mandolin' ? 'active' : ''} href="/Mandolin">Mandolin</a>
     <a class={path === '/Ukulele' ? 'active' : ''} href="/Ukulele">Ukulele</a>
     <a class={path === '/Banjo' ? 'active' : ''} href="/Banjo">Banjo</a>

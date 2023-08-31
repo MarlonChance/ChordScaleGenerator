@@ -338,7 +338,12 @@
         getChord()
         notesInChordString = ''
         for (let i = 0; i < notesInChord.length; i ++){
-            notesInChordString += notesInChord[i] + ",   "
+            if(i == 0){
+                notesInChordString += notesInChord[i]
+            }
+            else{
+                notesInChordString +=  ", " + " " + notesInChord[i]
+            }
         }
     }
 </script>
